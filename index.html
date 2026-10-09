@@ -192,7 +192,7 @@
       width: 90%;
       max-width: 360px;
       padding: 20px 24px;
-      font-size: 22px;
+      font-size: 18px;
       border: 3px solid #C5CAE9;
       border-radius: 16px;
       background: #F5F5F5;
@@ -200,6 +200,11 @@
       color: #263238;
       outline: none;
       margin: 14px 0;
+    }
+
+    .input-grande:focus {
+      border-color: #5C6BC0;
+      background: #FFFFFF;
     }
 
     .tarjeta {
@@ -249,9 +254,74 @@
     }
 
     .oculto { display: none !important; }
+
+    .mensaje {
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin: 12px 0;
+      text-align: center;
+      font-weight: 600;
+      width: 90%;
+      max-width: 360px;
+    }
+
+    .mensaje.exito {
+      background: #C8E6C9;
+      color: #2E7D32;
+      border: 2px solid #81C784;
+    }
+
+    .mensaje.error {
+      background: #FFCDD2;
+      color: #C62828;
+      border: 2px solid #EF9A9A;
+    }
+
+    .formulario-grupo {
+      margin: 16px 0;
+      width: 100%;
+    }
+
+    .etiqueta {
+      display: block;
+      font-weight: 700;
+      color: #1A237E;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .perfil-info {
+      background: rgba(92, 107, 192, 0.08);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 12px 0;
+      text-align: center;
+      border: 2px solid rgba(92, 107, 192, 0.2);
+    }
+
+    .perfil-info-titulo {
+      font-weight: 700;
+      color: #1A237E;
+      font-size: 18px;
+    }
+
+    .perfil-info-valor {
+      color: #37474F;
+      font-size: 16px;
+      margin-top: 4px;
+    }
+
+    .boton-pequeno {
+      width: auto;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 30px;
+      margin: 8px 4px;
+    }
   </style>
 </head>
 <body>
+  <!-- PANTALLA INICIO -->
   <div id="pantalla-inicio" class="pantalla activa">
     <div class="avatar-contenedor" id="avatarInicio">
       <div class="avatar-esfera"></div>
@@ -266,27 +336,71 @@
       <div class="burbuja-texto">Hola, estoy aquí contigo. ¿Quieres que te acompañe hoy?</div>
     </div>
 
-    <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-menu')">Comenzar 💛</button>
+    <button class="boton-grande boton-primario" onclick="irRegistro()">Comenzar 💛</button>
   </div>
 
-  <div id="pantalla-menu" class="pantalla">
-    <h1 class="titulo-seccion">¿Qué necesitas?</h1>
+  <!-- PANTALLA REGISTRO -->
+  <div id="pantalla-registro" class="pantalla oculto">
+    <h1 class="titulo-seccion">Cuéntame sobre ti</h1>
+
+    <div class="tarjeta">
+      <div class="formulario-grupo">
+        <label class="etiqueta">¿Cuál es tu nombre?</label>
+        <input type="text" id="nombre-usuario" class="input-grande" placeholder="Tu nombre" maxlength="50">
+      </div>
+
+      <div class="formulario-grupo">
+        <label class="etiqueta">¿Cuántos años tienes?</label>
+        <input type="number" id="edad-usuario" class="input-grande" placeholder="18" min="13" max="120">
+      </div>
+
+      <div class="formulario-grupo">
+        <label class="etiqueta">¿Cómo estás hoy?</label>
+        <select id="animo-usuario" class="input-grande" style="text-align: center;">
+          <option value="">Selecciona...</option>
+          <option value="bien">😊 Bien</option>
+          <option value="regular">😐 Regular</option>
+          <option value="mal">😔 Mal</option>
+          <option value="ansiedad">😰 Con ansiedad</option>
+          <option value="triste">😢 Triste</option>
+        </select>
+      </div>
+
+      <button class="boton-grande boton-primario" onclick="guardarUsuario()">Continuar 💛</button>
+      <div id="mensaje-registro"></div>
+    </div>
+  </div>
+
+  <!-- PANTALLA MENU PRINCIPAL -->
+  <div id="pantalla-menu" class="pantalla oculto">
+    <div id="saludo-usuario"></div>
+
+    <div class="avatar-contenedor atento">
+      <div class="avatar-esfera"></div>
+      <div class="avatar-ojos">
+        <div class="avatar-ojo"></div>
+        <div class="avatar-ojo"></div>
+      </div>
+      <div class="nombre-avatar">Contigo</div>
+    </div>
+
+    <div class="burbuja-mensaje">
+      <div class="burbuja-texto" id="mensaje-bienvenida"></div>
+    </div>
 
     <div class="fila" style="margin-top: 20px;">
-      <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-hablar')">Hablar</button>
-      <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-respirar')">Respirar</button>
-      <button class="boton-grande boton-sos" onclick="siguientePantalla('pantalla-sos')">SOS</button>
+      <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-hablar')" style="width: 100%; max-width: 280px; font-size: 20px;">💬 Hablar</button>
+      <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-respirar')" style="width: 100%; max-width: 280px; font-size: 20px;">🧘 Respirar</button>
     </div>
 
-    <div class="tarjeta" style="margin-top: 22px;">
-      <div class="texto-pequeno">
-        “He buscado construir algo que ilumine el camino de quienes se sienten solos.”
-      </div>
-      <div class="texto-pequeno" style="margin-top: 8px; font-weight: 700; color: #1A237E;">— Jofre Roberto Daniel</div>
+    <div class="fila">
+      <button class="boton-grande boton-sos" onclick="siguientePantalla('pantalla-sos')" style="width: 100%; max-width: 280px; font-size: 20px;">🆘 SOS</button>
+      <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-perfil')" style="width: 100%; max-width: 280px; font-size: 20px;">👤 Perfil</button>
     </div>
   </div>
 
-  <div id="pantalla-hablar" class="pantalla">
+  <!-- PANTALLA HABLAR -->
+  <div id="pantalla-hablar" class="pantalla oculto">
     <div class="avatar-contenedor hablando" id="avatarHabla">
       <div class="avatar-esfera"></div>
       <div class="avatar-ojos">
@@ -301,12 +415,16 @@
     </div>
 
     <div class="tarjeta">
-      <textarea class="input-grande" rows="4" placeholder="Escribe lo que sientes..." style="font-size: 18px; resize: none; width: 100%; min-height: 130px; background: #F8F9FF; border-color: #D3D9F0;"></textarea>
-      <button class="boton-grande boton-primario" onclick="alert('Mensaje guardado en tu apoyo emocional 💛')">Enviar</button>
+      <textarea id="textarea-mensaje" class="input-grande" rows="4" placeholder="Escribe lo que sientes..." style="font-size: 18px; resize: none; width: 100%; min-height: 130px; background: #F8F9FF; border-color: #D3D9F0; padding: 16px;"></textarea>
+      <button class="boton-grande boton-primario" onclick="guardarMensaje()">Enviar 💛</button>
+      <div id="mensaje-hablar"></div>
     </div>
+
+    <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-menu')" style="font-size: 18px; max-width: 280px;">Volver</button>
   </div>
 
-  <div id="pantalla-respirar" class="pantalla">
+  <!-- PANTALLA RESPIRAR -->
+  <div id="pantalla-respirar" class="pantalla oculto">
     <h1 class="titulo-seccion">Respira conmigo</h1>
 
     <div class="avatar-contenedor atento">
@@ -321,11 +439,13 @@
     <div class="tarjeta">
       <div class="texto-pequeno" style="font-size: 22px; font-weight: 700; color: #1A237E;">Inhala 4 • Aguanta 4 • Exhala 6</div>
       <div class="texto-pequeno" style="margin-top: 18px; font-size: 18px;">Siente tu pecho, relaja la mandíbula y sigue el ritmo.</div>
-      <button class="boton-grande boton-secundario" onclick="alert('Ejercicio de respiración activado')" style="margin-top: 16px;">Iniciar</button>
+      <button class="boton-grande boton-secundario" onclick="iniciarRespiracion()" style="margin-top: 16px;">Iniciar 🫁</button>
+      <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-menu')" style="margin-top: 8px;">Volver</button>
     </div>
   </div>
 
-  <div id="pantalla-sos" class="pantalla">
+  <!-- PANTALLA SOS -->
+  <div id="pantalla-sos" class="pantalla oculto">
     <h1 class="titulo-seccion">Apoyo inmediato</h1>
 
     <div class="fila" style="margin-top: 20px;">
@@ -336,15 +456,192 @@
 
     <div class="tarjeta" style="margin-top: 20px;">
       <div class="texto-pequeno" style="font-size: 18px; font-weight: 700; color: #1A237E;">Si te sientes muy abrumado, pide ayuda ahora mismo.</div>
-      <button class="boton-grande boton-sos" onclick="alert('Llamada de apoyo simulada')" style="margin-top: 16px;">Llamar a apoyo</button>
+      <button class="boton-grande boton-sos" onclick="llamarApoyo()" style="margin-top: 16px;">Llamar a apoyo 📞</button>
       <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-menu')" style="margin-top: 10px;">Volver</button>
     </div>
   </div>
 
+  <!-- PANTALLA PERFIL -->
+  <div id="pantalla-perfil" class="pantalla oculto">
+    <h1 class="titulo-seccion">Tu perfil</h1>
+
+    <div class="tarjeta">
+      <div id="datos-perfil"></div>
+      <button class="boton-grande boton-primario boton-pequeno" onclick="editarPerfil()" style="margin-top: 16px; width: 90%;">Editar perfil</button>
+      <button class="boton-grande boton-secundario boton-pequeno" onclick="cerrarSesion()" style="margin-top: 8px; width: 90%;">Cerrar sesión</button>
+      <button class="boton-grande boton-secundario boton-pequeno" onclick="siguientePantalla('pantalla-menu')" style="margin-top: 8px; width: 90%;">Volver</button>
+    </div>
+  </div>
+
   <script>
+    // Verificar si el usuario está registrado
+    window.addEventListener('DOMContentLoaded', function() {
+      const usuarioGuardado = localStorage.getItem('contigo_usuario');
+      if (usuarioGuardado) {
+        const usuario = JSON.parse(usuarioGuardado);
+        mostrarMenuPrincipal(usuario);
+      }
+    });
+
+    function irRegistro() {
+      siguientePantalla('pantalla-registro');
+    }
+
+    function guardarUsuario() {
+      const nombre = document.getElementById('nombre-usuario').value.trim();
+      const edad = document.getElementById('edad-usuario').value;
+      const animo = document.getElementById('animo-usuario').value;
+      const mensajeDiv = document.getElementById('mensaje-registro');
+
+      if (!nombre || !edad || !animo) {
+        mensajeDiv.innerHTML = '<div class="mensaje error">⚠️ Por favor completa todos los campos</div>';
+        return;
+      }
+
+      if (edad < 13) {
+        mensajeDiv.innerHTML = '<div class="mensaje error">⚠️ Debes tener al menos 13 años</div>';
+        return;
+      }
+
+      const usuario = {
+        nombre: nombre,
+        edad: parseInt(edad),
+        animo: animo,
+        fechaRegistro: new Date().toLocaleDateString('es-ES'),
+        mensajesSesion: []
+      };
+
+      localStorage.setItem('contigo_usuario', JSON.stringify(usuario));
+      mensajeDiv.innerHTML = '<div class="mensaje exito">✅ ¡Bienvenido a Contigo!</div>';
+
+      setTimeout(() => {
+        mostrarMenuPrincipal(usuario);
+      }, 1200);
+    }
+
+    function mostrarMenuPrincipal(usuario) {
+      const emojiAnimo = {
+        'bien': '😊',
+        'regular': '😐',
+        'mal': '😔',
+        'ansiedad': '😰',
+        'triste': '😢'
+      };
+
+      const saludoDiv = document.getElementById('saludo-usuario');
+      saludoDiv.innerHTML = `
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Hola, ${usuario.nombre} ${emojiAnimo[usuario.animo]}</div>
+          <div class="perfil-info-valor">${usuario.edad} años • Aquí desde ${usuario.fechaRegistro}</div>
+        </div>
+      `;
+
+      const mensajeBienvenida = document.getElementById('mensaje-bienvenida');
+      const mensajes = [
+        `Qué gusto verte, ${usuario.nombre}. ¿Cómo te sientes hoy?`,
+        `${usuario.nombre}, estoy aquí para acompañarte en este momento.`,
+        `Bienvenido de nuevo, ${usuario.nombre} 💛`,
+        `¿Qué necesitas hoy, ${usuario.nombre}?`
+      ];
+      mensajeBienvenida.textContent = mensajes[Math.floor(Math.random() * mensajes.length)];
+
+      document.getElementById('pantalla-registro').classList.remove('activa');
+      document.getElementById('pantalla-inicio').classList.remove('activa');
+      document.getElementById('pantalla-menu').classList.add('activa');
+    }
+
+    function guardarMensaje() {
+      const mensaje = document.getElementById('textarea-mensaje').value.trim();
+      const mensajeDiv = document.getElementById('mensaje-hablar');
+
+      if (!mensaje) {
+        mensajeDiv.innerHTML = '<div class="mensaje error">⚠️ Escribe algo antes de enviar</div>';
+        return;
+      }
+
+      // Guardar mensaje en localStorage
+      const usuario = JSON.parse(localStorage.getItem('contigo_usuario'));
+      if (!usuario.mensajesSesion) usuario.mensajesSesion = [];
+      
+      usuario.mensajesSesion.push({
+        contenido: mensaje,
+        fecha: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+      });
+
+      localStorage.setItem('contigo_usuario', JSON.stringify(usuario));
+
+      mensajeDiv.innerHTML = '<div class="mensaje exito">✅ Tu mensaje fue guardado con cuidado 💛</div>';
+      document.getElementById('textarea-mensaje').value = '';
+
+      setTimeout(() => {
+        mensajeDiv.innerHTML = '';
+      }, 2000);
+    }
+
+    function iniciarRespiracion() {
+      alert('🫁 Ejercicio de respiración iniciado\n\nInhala (4s) → Aguanta (4s) → Exhala (6s)\n\n¡Tómate tu tiempo, respira con calma!');
+    }
+
+    function llamarApoyo() {
+      alert('📞 Apoyo inmediato activado\n\nSi necesitas ayuda urgente, contacta con:\n\n🆘 Emergencias: 911\n💬 Línea de apoyo emocional: disponible para ti');
+    }
+
+    function mostrarPerfil() {
+      const usuario = JSON.parse(localStorage.getItem('contigo_usuario'));
+      const datosDiv = document.getElementById('datos-perfil');
+
+      const emojiAnimo = {
+        'bien': '😊 Bien',
+        'regular': '😐 Regular',
+        'mal': '😔 Mal',
+        'ansiedad': '😰 Con ansiedad',
+        'triste': '😢 Triste'
+      };
+
+      datosDiv.innerHTML = `
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Nombre</div>
+          <div class="perfil-info-valor">${usuario.nombre}</div>
+        </div>
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Edad</div>
+          <div class="perfil-info-valor">${usuario.edad} años</div>
+        </div>
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Estado actual</div>
+          <div class="perfil-info-valor">${emojiAnimo[usuario.animo]}</div>
+        </div>
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Registro</div>
+          <div class="perfil-info-valor">${usuario.fechaRegistro}</div>
+        </div>
+        <div class="perfil-info">
+          <div class="perfil-info-titulo">Mensajes guardados</div>
+          <div class="perfil-info-valor">${usuario.mensajesSesion?.length || 0} mensaje(s)</div>
+        </div>
+      `;
+    }
+
+    function editarPerfil() {
+      alert('📝 Función de edición disponible pronto');
+    }
+
+    function cerrarSesion() {
+      if (confirm('¿Deseas cerrar sesión? Tus datos se mantendrán guardados.')) {
+        localStorage.removeItem('contigo_usuario');
+        document.getElementById('pantalla-perfil').classList.remove('activa');
+        document.getElementById('pantalla-inicio').classList.add('activa');
+        document.getElementById('pantalla-menu').classList.remove('activa');
+      }
+    }
+
     function siguientePantalla(id) {
       document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
       document.getElementById(id).classList.add('activa');
+      
+      if (id === 'pantalla-perfil') {
+        mostrarPerfil();
+      }
     }
   </script>
 </body>
