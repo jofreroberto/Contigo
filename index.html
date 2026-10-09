@@ -2,1336 +2,350 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contigo | Acompañamiento emocional</title>
-  <meta name="theme-color" content="#1f2a44" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>🌟 Contigo — Siempre aquí 💛</title>
+  <meta name="theme-color" content="#1A237E" />
   <style>
-    :root {
-      --bg: #f4f1ee;
-      --panel: rgba(255,255,255,0.86);
-      --primary: #1f2a44;
-      --primary-soft: #edf3ff;
-      --gold: #d7b26d;
-      --gold-soft: #f6e8c9;
-      --success: #27b778;
-      --danger: #ff5c5c;
-      --text: #182130;
-      --muted: #59657a;
-      --line: rgba(24,33,48,0.08);
-      --shadow: 0 20px 40px rgba(20,24,35,0.08);
-      --radius-xl: 30px;
-      --radius-lg: 22px;
-      --radius-md: 14px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", "Roboto", sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html, body {
+      height: 100%;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(180deg, #f7f4f0 0%, #f4f5fb 100%);
-      color: var(--text);
+      background: linear-gradient(180deg, #F5F5F5 0%, #E8EAF6 40%, #C5CAE9 100%);
       min-height: 100vh;
-      padding: 12px;
+      overflow-x: hidden;
+      color: #263238;
     }
 
-    .app-shell { width: min(100%, 560px); margin: 0 auto; }
-    .pantalla { display: none; animation: fade 0.22s ease; }
-    .pantalla.activa { display: block; }
-    .oculto { display: none !important; }
+    .pantalla {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      animation: aparecerSuave 0.6s ease-out;
+    }
 
-    @keyframes fade {
-      from { opacity: 0; transform: translateY(10px); }
+    .pantalla.activa {
+      display: flex;
+    }
+
+    @keyframes aparecerSuave {
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .premium-shell {
-      background: rgba(255,255,255,0.34);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 36px;
-      padding: 18px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-    }
-
-    .hero {
-      background: linear-gradient(160deg, rgba(31,42,68,1) 0%, rgba(48,63,92,0.96) 36%, rgba(103,118,157,0.97) 100%);
-      border-radius: var(--radius-xl);
-      padding: 26px 22px 20px;
-      color: white;
-      border: 1px solid rgba(255,255,255,0.12);
+    .avatar-contenedor {
+      text-align: center;
+      margin-bottom: 30px;
       position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
       width: 220px;
       height: 220px;
-      right: -40px;
-      top: -50px;
-      background: radial-gradient(circle, rgba(215,178,109,0.35), rgba(215,178,109,0));
+    }
+
+    .avatar-esfera {
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, #5C6BC0 0%, #1A237E 100%);
       border-radius: 50%;
-    }
-
-    .hero-mark { position: relative; z-index: 1; font-size: 4rem; margin-bottom: 10px; }
-    .hero h1 {
-      position: relative; z-index: 1;
-      font-size: clamp(2.2rem, 6vw, 3rem);
-      line-height: 1.05;
-      letter-spacing: -0.06em;
-      margin-bottom: 12px;
-      font-weight: 800;
-    }
-    .hero p {
-      position: relative; z-index: 1;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.65;
-      font-size: 1rem;
-      max-width: 360px;
-    }
-
-    .section {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow);
-      padding: 18px 18px 16px;
-      margin-top: 16px;
-      backdrop-filter: blur(8px);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.05rem;
-    }
-
-    .badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--gold-soft), #fff3db);
-      font-size: 1.1rem;
-      box-shadow: inset 0 0 0 1px rgba(215,178,109,0.2);
-    }
-
-    .btn {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 15px 18px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      letter-spacing: 0.01em;
-    }
-    .btn:active { transform: translateY(1px) scale(0.99); }
-    .btn.primary {
-      color: white;
-      background: linear-gradient(135deg, var(--gold) 0%, #c5964d 100%);
-      box-shadow: 0 14px 18px rgba(201,157,92,0.35);
-    }
-    .btn.secondary {
-      color: var(--primary);
-      background: #eef3ff;
-      border: 1px solid rgba(31,42,68,0.08);
-    }
-    .btn.ghost {
-      color: var(--primary);
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(31,42,68,0.08);
-    }
-    .btn.success {
-      color: white;
-      background: linear-gradient(135deg, #25c37d, #129a6b);
-      box-shadow: 0 12px 20px rgba(37,195,125,0.18);
-    }
-    .btn.danger {
-      color: white;
-      background: linear-gradient(135deg, #ff6c7d, #ff4c5d);
-      box-shadow: 0 12px 20px rgba(255,92,104,0.22);
-    }
-    .btn.warn {
-      color: white;
-      background: linear-gradient(135deg, #f7b955, #e29435);
-      box-shadow: 0 12px 20px rgba(247,185,85,0.24);
-    }
-    .btn.small {
-      width: auto;
-      min-width: 132px;
-      padding: 10px 14px;
-      font-size: 0.88rem;
-      border-radius: 10px;
-    }
-
-    .quote-box {
-      background: linear-gradient(135deg, #fffaf0, #f7f1e7);
-      border: 1px solid rgba(215,178,109,0.25);
-      border-radius: 16px;
-      padding: 16px;
-      color: #694e24;
-      font-weight: 600;
-      line-height: 1.6;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      border: 1px solid rgba(31,42,68,0.12);
-      background: rgba(248,250,252,0.9);
-      border-radius: 12px;
-      padding: 11px 12px;
-      color: var(--text);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    input:focus, textarea:focus, select:focus {
-      border-color: rgba(31,42,68,0.25);
-      box-shadow: 0 0 0 4px rgba(31,42,68,0.08);
-      background: white;
-    }
-
-    .row { display: flex; gap: 10px; flex-wrap: wrap; }
-    .row > * { flex: 1; min-width: 120px; }
-
-    .subtle { color: var(--muted); line-height: 1.6; }
-    .reloj {
-      font-size: clamp(2.4rem, 6vw, 3rem);
-      font-weight: 800;
-      letter-spacing: -0.08em;
-      text-align: center;
-      color: var(--primary);
-      margin: 10px 0 12px;
-    }
-
-    .mini-list { display: grid; gap: 10px; }
-    .mini-item {
-      background: rgba(248,250,252,0.9);
-      border: 1px solid rgba(31,42,68,0.08);
-      border-radius: 14px;
-      padding: 12px 14px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .mini-item strong { color: var(--primary); display: block; margin-bottom: 4px; }
-
-    .card-list { display: grid; gap: 10px; }
-    .list-item {
-      background: rgba(248,250,252,0.9);
-      border: 1px solid rgba(31,42,68,0.08);
-      border-radius: 12px;
-      padding: 12px 14px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .list-item strong { color: var(--primary); }
-
-    .status-box {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: linear-gradient(135deg, rgba(223,246,234,0.9), rgba(234,253,244,0.95));
-      border: 1px solid rgba(44,182,125,0.16);
-      color: #0d6d4d;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-weight: 700;
-      margin-top: 10px;
-    }
-
-    .sos-list { display: grid; gap: 12px; margin-top: 12px; }
-    .sos-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-bottom: 8px;
-      border-bottom: 1px solid rgba(31,42,68,0.08);
-      color: var(--primary);
-      font-weight: 600;
-    }
-    .sos-row:last-child { border-bottom: none; padding-bottom: 0; }
-
-    .nav {
-      position: fixed;
+      position: absolute;
+      top: 50%;
       left: 50%;
-      bottom: 0;
-      transform: translateX(-50%);
-      width: min(100%, 560px);
-      background: rgba(255,255,255,0.86);
-      backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(31,42,68,0.08);
-      box-shadow: 0 -12px 30px rgba(15,23,42,0.08);
-      padding: 8px 12px 12px;
-      z-index: 10;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 60px rgba(92, 107, 192, 0.6), 0 0 120px rgba(26, 35, 126, 0.4);
+      transition: all 0.5s ease;
     }
-    .nav-inner {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 8px;
-    }
-    .nav-btn {
-      background: transparent;
-      border: none;
-      padding: 8px 6px 7px;
-      border-radius: 12px;
-      color: var(--muted);
-      font-weight: 700;
+
+    .avatar-ojos {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.76rem;
-      cursor: pointer;
+      gap: 30px;
+      z-index: 2;
     }
-    .nav-btn.active {
-      color: var(--primary);
-      background: linear-gradient(135deg, rgba(234,240,255,0.9), rgba(246,232,201,0.8));
-    }
-    .nav-spacer { height: 94px; }
 
-    .respira-circle {
-      width: 130px;
-      height: 130px;
+    .avatar-ojo {
+      width: 20px;
+      height: 40px;
+      background: #E8EAF6;
       border-radius: 50%;
-      margin: 18px auto;
-      display: grid;
-      place-items: center;
-      font-size: 2.2rem;
-      background: linear-gradient(135deg, #dfeeff, #cfe3ff);
-      border: 6px solid rgba(31,42,68,0.06);
-      transition: transform 0.8s ease, background 0.8s ease;
+      box-shadow: 0 0 20px rgba(232, 234, 246, 0.8);
+      transition: all 0.3s ease;
     }
-    .respira-circle.inhala { transform: scale(1.28); background: linear-gradient(135deg, #bfd6ff, #b7d7ff); }
-    .respira-circle.sostiene { transform: scale(1.42); background: linear-gradient(135deg, #d9d1ff, #c7d0ff); }
-    .respira-circle.exhala { transform: scale(1); background: linear-gradient(135deg, #dfeeff, #cfe3ff); }
 
-    .avatar-option {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: rgba(248,250,252,0.7);
-      border: 1px solid transparent;
-      font-size: 2rem;
+    .avatar-contenedor.atento .avatar-esfera {
+      background: radial-gradient(circle, #7986CB 0%, #3949AB 100%);
+      box-shadow: 0 0 70px rgba(121, 134, 203, 0.7), 0 0 140px rgba(57, 73, 171, 0.5);
+    }
+
+    .avatar-contenedor.hablando .avatar-ojo {
+      animation: parpadearSuave 1.2s ease-in-out infinite;
+    }
+
+    .avatar-contenedor.hablando .avatar-esfera {
+      animation: latirLuz 3s ease-in-out infinite;
+    }
+
+    @keyframes parpadearSuave {
+      0%, 100% { height: 40px; width: 20px; }
+      50% { height: 5px; width: 20px; border-radius: 50px; }
+    }
+
+    @keyframes latirLuz {
+      0%, 100% {
+        box-shadow: 0 0 70px rgba(121, 134, 203, 0.7), 0 0 140px rgba(57, 73, 171, 0.5);
+      }
+      50% {
+        box-shadow: 0 0 90px rgba(121, 134, 203, 0.9), 0 0 180px rgba(57, 73, 171, 0.7);
+      }
+    }
+
+    .nombre-avatar {
+      font-size: 26px;
+      color: #1A237E;
+      margin-top: 200px;
+      font-weight: 500;
+      text-shadow: 0 2px 4px rgba(26, 35, 126, 0.1);
+    }
+
+    .burbuja-mensaje {
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      padding: 20px 28px;
+      max-width: 90%;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      margin-bottom: 30px;
+      position: relative;
+      border: 2px solid #C5CAE9;
+    }
+
+    .burbuja-mensaje::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 12px 12px 0;
+      border-style: solid;
+      border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+    }
+
+    .burbuja-texto {
+      font-size: 22px;
+      color: #263238;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .boton-grande {
+      width: 90%;
+      max-width: 360px;
+      padding: 24px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 22px;
+      font-weight: 500;
       cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .avatar-option:hover, .avatar-option.selected {
-      background: rgba(234,240,255,0.9);
-      border-color: rgba(31,42,68,0.15);
-      transform: translateY(-1px);
+      transition: all 0.3s ease;
+      margin: 10px 0;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
     }
 
-    @media (max-width: 420px) {
-      body { padding: 10px; }
-      .premium-shell { padding: 12px; }
-      .hero { padding: 24px 18px 18px; }
-      .section { padding: 16px 14px; }
-      .row > * { min-width: 100%; }
+    .boton-grande:active {
+      transform: scale(0.97);
     }
+
+    .boton-primario {
+      background: linear-gradient(135deg, #5C6BC0 0%, #3949AB 100%);
+      color: white;
+    }
+
+    .boton-primario:hover {
+      box-shadow: 0 8px 24px rgba(92, 107, 192, 0.4);
+    }
+
+    .boton-secundario {
+      background: linear-gradient(135deg, #81D4FA 0%, #4FC3F7 100%);
+      color: #01579B;
+    }
+
+    .boton-secundario:hover {
+      box-shadow: 0 8px 24px rgba(129, 212, 250, 0.4);
+    }
+
+    .boton-sos {
+      background: linear-gradient(135deg, #EF5350 0%, #E53935 100%);
+      color: white;
+    }
+
+    .input-grande {
+      width: 90%;
+      max-width: 360px;
+      padding: 20px 24px;
+      font-size: 22px;
+      border: 3px solid #C5CAE9;
+      border-radius: 16px;
+      background: #F5F5F5;
+      text-align: center;
+      color: #263238;
+      outline: none;
+      margin: 14px 0;
+    }
+
+    .tarjeta {
+      width: 90%;
+      max-width: 420px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 12px 0;
+      box-shadow: 0 10px 25px rgba(26, 35, 126, 0.08);
+      border: 1px solid rgba(92, 107, 192, 0.12);
+    }
+
+    .texto-pequeno {
+      font-size: 16px;
+      line-height: 1.7;
+      color: #37474F;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .titulo-seccion {
+      font-size: 28px;
+      color: #1A237E;
+      margin-bottom: 10px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .fila {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 420px;
+    }
+
+    .chip {
+      display: inline-block;
+      padding: 10px 14px;
+      background: rgba(92, 107, 192, 0.1);
+      border-radius: 999px;
+      color: #1A237E;
+      font-weight: 600;
+      margin: 8px 6px;
+    }
+
+    .oculto { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <div id="pantalla-inicio" class="pantalla activa">
-      <div class="premium-shell">
-        <div class="hero">
-          <div class="hero-mark">💛</div>
-          <h1>Contigo</h1>
-          <p>Tu compañía emocional premium, cálida y consciente, siempre disponible cuando más la necesitas.</p>
-          <div style="margin-top: 24px;">
-            <button class="btn primary" onclick="comenzar()">Comenzar</button>
-          </div>
-        </div>
-
-        <div class="section" style="margin-top: 18px;">
-          <div class="quote-box">
-            “He buscado construir algo que ilumine el camino de quienes se sienten solos. La mayor riqueza es saber que no están solos.”
-          </div>
-          <div style="text-align:center; color: var(--muted); font-weight:700; margin-top: 12px;">— Jofre Roberto Daniel</div>
-        </div>
+  <div id="pantalla-inicio" class="pantalla activa">
+    <div class="avatar-contenedor" id="avatarInicio">
+      <div class="avatar-esfera"></div>
+      <div class="avatar-ojos">
+        <div class="avatar-ojo"></div>
+        <div class="avatar-ojo"></div>
       </div>
+      <div class="nombre-avatar">Contigo</div>
     </div>
 
-    <div id="pantalla-tutorial" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">✦</span> <span id="tituloPaso">Bienvenido</span></div>
-          <p class="subtle" id="textoPaso" style="min-height: 110px; font-size:1.04rem;"></p>
-          <div class="row" style="margin-top: 16px;">
-            <button class="btn ghost" id="btnAnterior" onclick="pasoAnterior()">Anterior</button>
-            <button class="btn primary" id="btnSiguiente" onclick="pasoSiguiente()">Siguiente</button>
-          </div>
-          <div style="text-align:center; margin-top: 12px; color: var(--muted); font-weight:700;" id="indicadorPaso">1 / 6</div>
-        </div>
-      </div>
+    <div class="burbuja-mensaje">
+      <div class="burbuja-texto">Hola, estoy aquí contigo. ¿Quieres que te acompañe hoy?</div>
     </div>
 
-    <div id="pantalla-pin" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🔐</span> Seguridad</div>
-          <p class="subtle" style="margin-bottom:14px;">Protege tu información con un PIN de 4 dígitos.</p>
-          <input type="password" id="pin1" maxlength="4" inputmode="numeric" placeholder="____" />
-          <button class="btn primary" onclick="guardarPin()" style="margin-top: 12px;">Guardar PIN</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-verificar-pin" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🔑</span> Acceso</div>
-          <p class="subtle" style="margin-bottom: 14px;">Ingresa tu PIN para continuar.</p>
-          <input type="password" id="pinIngreso" maxlength="4" inputmode="numeric" placeholder="____" />
-          <button class="btn primary" onclick="verificarPin()" style="margin-top: 12px;">Ingresar</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-avatar" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">✨</span> Mi compañera</div>
-          <p class="subtle" style="margin-bottom:12px;">Elige la personalidad que te acompañará.</p>
-          <div id="avatarPreview" style="text-align:center; font-size:4.2rem; margin:8px 0 14px;">😊</div>
-          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
-            <span class="avatar-option selected" onclick="elegirAvatar('😊')">😊</span>
-            <span class="avatar-option" onclick="elegirAvatar('👵')">👵</span>
-            <span class="avatar-option" onclick="elegirAvatar('👴')">👴</span>
-            <span class="avatar-option" onclick="elegirAvatar('🐱')">🐱</span>
-            <span class="avatar-option" onclick="elegirAvatar('🐶')">🐶</span>
-            <span class="avatar-option" onclick="elegirAvatar('🦋')">🦋</span>
-            <span class="avatar-option" onclick="elegirAvatar('🌟')">🌟</span>
-            <span class="avatar-option" onclick="elegirAvatar('🌻')">🌻</span>
-            <span class="avatar-option" onclick="elegirAvatar('🌊')">🌊</span>
-          </div>
-          <button class="btn primary" onclick="guardarAvatar()" style="margin-top: 16px;">Guardar</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-principal" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🏠</span> Inicio</div>
-          <div class="reloj" id="reloj">00:00</div>
-          <div style="text-align:center; font-weight:700; color: var(--muted); margin-bottom: 12px;" id="saludo">Buenos días</div>
-          <div class="quote-box">
-            <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; opacity:0.7; margin-bottom:6px;">Mensaje del día</div>
-            <div id="mensajeDelDia">“Hoy es un buen día. Estoy aquí contigo.”</div>
-          </div>
-          <button class="btn primary" onclick="leerTexto(document.getElementById('mensajeDelDia').textContent)" style="margin-top: 12px;">Escuchar mensaje</button>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">🎤</span> Asistente</div>
-          <button class="btn primary" onclick="iniciarReconocimientoVoz()">Hablar conmigo</button>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">☀️</span> Rutina</div>
-          <div class="mini-list">
-            <div class="mini-item"><strong>08:00</strong> Levantarse e hidratarse</div>
-            <div class="mini-item"><strong>10:00</strong> Tomar tus medicamentos</div>
-            <div class="mini-item"><strong>10:30</strong> Un poco de movimiento</div>
-            <div class="mini-item"><strong>13:00</strong> Descansar</div>
-            <div class="mini-item"><strong>17:00</strong> Respiración consciente</div>
-            <div class="mini-item"><strong>22:00</strong> Dormir bien</div>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">💊</span> Salud</div>
-          <div id="listaMedicamentos" class="card-list"></div>
-          <div class="row" style="margin-top: 12px;">
-            <button class="btn ghost" onclick="mostrarPantalla('libro-recetas')">Agregar</button>
-            <button class="btn secondary" onclick="mostrarPantalla('libro-recetas')">Recetas</button>
-          </div>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">📅</span> Citas</div>
-          <div id="listaCitas" class="card-list"></div>
-          <button class="btn ghost" onclick="mostrarPantalla('citas')" style="margin-top: 12px;">Agregar cita</button>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">🧘</span> Calma</div>
-          <p class="subtle" style="margin-bottom: 10px;">Tómate un momento para respirar y equilibrar tus emociones.</p>
-          <button class="btn warn" onclick="mostrarPantalla('respiracion')">Ejercicios de respiración</button>
-        </div>
-
-        <div class="section">
-          <div class="section-header"><span class="badge">🗺️</span> Viaje seguro</div>
-          <p class="subtle" style="margin-bottom: 10px;">¿A dónde vas hoy? Te acompaño en el camino.</p>
-          <input type="text" id="destinoViaje" placeholder="Escribe tu destino..." />
-          <div class="row" style="margin-top: 12px;">
-            <button class="btn primary" onclick="iniciarViaje()">Iniciar</button>
-            <button class="btn ghost" onclick="obtenerUbicacion()">Ubicación</button>
-          </div>
-        </div>
-
-        <button class="btn danger" onclick="mostrarPantalla('sos')" style="margin-top: 10px;">Necesito ayuda — SOS</button>
-      </div>
-    </div>
-
-    <div id="pantalla-perdido" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🧭</span> Ayuda</div>
-          <p id="mensajeUbicacion" class="subtle">Estoy buscando dónde estás...</p>
-          <div id="lugaresCercanos" class="mini-item" style="margin-top: 12px;">Buscando lugares cercanos...</div>
-          <button class="btn primary" onclick="guiarACasa()" style="margin-top: 12px;">Guiarme a casa</button>
-          <button class="btn ghost" onclick="mostrarPantalla('sos')" style="margin-top: 8px;">Llamar a alguien</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-viaje" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🚶</span> Camino seguro</div>
-          <div class="mini-list">
-            <div class="mini-item"><strong>Destino:</strong> <span id="destinoActual">-</span></div>
-            <div class="mini-item"><strong>Tiempo estimado:</strong> <span id="tiempoLlegada">-</span></div>
-          </div>
-          <div class="status-box" id="instruccionCamino" style="margin-top: 12px;">Sigue caminando con calma. Estoy contigo.</div>
-          <div class="row" style="margin-top: 12px;">
-            <button class="btn ghost" onclick="verRutaSegura()">¿Voy bien?</button>
-            <button class="btn success" onclick="finalizarViaje()">Llegué</button>
-          </div>
-          <button class="btn danger" onclick="meHePerdido()" style="margin-top: 10px;">Me perdí</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-sos" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🆘</span> SOS</div>
-          <div class="sos-list" id="listaSOS"></div>
-          <button class="btn danger" style="margin-top: 12px;" onclick="llamarEmergencia()">Llamar ahora</button>
-          <button class="btn ghost" style="margin-top: 8px;" onclick="notificarFamilia()">Avisar a mi familia</button>
-          <button class="btn ghost" style="margin-top: 8px;" onclick="agregarTelefonoSOS()">Agregar contacto</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-libro-recetas" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">📖</span> Mi libro</div>
-          <div id="listaRecetas" class="card-list"></div>
-          <label class="subtle" style="display:block; margin-top:12px; margin-bottom:8px;">Nombre</label>
-          <input type="text" id="nombreReceta" placeholder="Paracetamol" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Dosis</label>
-          <input type="text" id="dosisReceta" placeholder="1 comprimido cada 8 horas" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Médico</label>
-          <input type="text" id="medicoReceta" placeholder="Nombre del médico" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Fecha</label>
-          <input type="date" id="fechaReceta" />
-          <textarea id="notasReceta" rows="2" placeholder="Observaciones" style="margin-top: 10px;"></textarea>
-          <button class="btn primary" onclick="guardarReceta()" style="margin-top: 12px;">Guardar</button>
-          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-citas" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">📅</span> Citas</div>
-          <label class="subtle" style="display:block; margin-bottom:8px;">Con quién</label>
-          <input type="text" id="nombreCita" placeholder="Ej. Dr. Martínez" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Fecha</label>
-          <input type="date" id="fechaCita" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Hora</label>
-          <input type="time" id="horaCita" />
-          <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Recordatorio</label>
-          <select id="avisoCita">
-            <option value="1d">1 día antes</option>
-            <option value="3d">3 días antes</option>
-            <option value="1s">1 semana antes</option>
-          </select>
-          <button class="btn primary" onclick="guardarCita()" style="margin-top: 12px;">Guardar cita</button>
-          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-respiracion" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🧘</span> Respiración</div>
-          <p id="textoRespira" class="subtle" style="text-align:center; margin-top:8px;">Respira conmigo...</p>
-          <div id="circuloRespira" class="respira-circle">🌬️</div>
-          <button class="btn primary" onclick="iniciarRespiracion()">Comenzar</button>
-          <button class="btn ghost" onclick="detenerRespiracion()" style="margin-top: 10px;">Detener</button>
-          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 10px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-musica" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🎵</span> Música</div>
-          <div id="listaMusica" class="mini-item">Tu lista está vacía por ahora.</div>
-          <input type="text" id="buscarMusica" placeholder="Buscar canción o artista" style="margin-top: 12px;" />
-          <button class="btn primary" onclick="alert('🎵 Función de búsqueda disponible 💛')" style="margin-top: 10px;">Buscar</button>
-          <input type="text" id="nombreCancion" placeholder="Nombre de la canción" style="margin-top: 12px;" />
-          <input type="text" id="enlaceCancion" placeholder="Enlace (Spotify, YouTube, etc.)" style="margin-top: 8px;" />
-          <button class="btn ghost" onclick="alert('✅ Canción agregada 💛')" style="margin-top: 12px;">Agregar a mi lista</button>
-          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-cuentos" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">📚</span> Cuentos</div>
-          <div class="mini-list">
-            <div class="mini-item"><strong>⭐ La estrella que siempre brilla</strong><div style="color: var(--muted);">Calma y paz</div></div>
-            <div class="mini-item"><strong>🦋 La pequeña mariposa</strong><div style="color: var(--muted);">Para animar el corazón</div></div>
-            <div class="mini-item"><strong>🌻 El jardín tranquilo</strong><div style="color: var(--muted);">Relajación</div></div>
-          </div>
-          <textarea id="contenidoCuento" rows="4" placeholder="Escribe o pega un cuento..." style="margin-top: 12px;"></textarea>
-          <button class="btn primary" onclick="alert('✅ Cuento guardado 💛')" style="margin-top: 12px;">Guardar cuento</button>
-          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-ajustes" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">⚙️</span> Ajustes</div>
-          <label class="subtle" style="display:block; margin-bottom:8px;">Idioma</label>
-          <select id="selectorIdioma" onchange="cambiarIdioma(this.value)">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="pt">Português</option>
-            <option value="fr">Français</option>
-            <option value="it">Italiano</option>
-          </select>
-
-          <div class="quote-box" style="margin-top: 14px;">
-            <div style="font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.7; margin-bottom:6px;">Velocidad de voz</div>
-            <input type="range" id="velocidadVoz" min="0.5" max="2" step="0.1" value="1" />
-          </div>
-
-          <button class="btn ghost" onclick="mostrarPantalla('comandos')" style="margin-top: 14px;">Mis comandos</button>
-          <button class="btn ghost" onclick="enviarRespaldo()" style="margin-top: 8px;">Descargar respaldo</button>
-
-          <div class="quote-box" style="margin-top: 14px; background: linear-gradient(135deg, rgba(223,246,234,0.9), rgba(240,253,244,0.95)); color: #0d6d4d; border-color: rgba(44,182,125,0.16);">
-            <strong>Contigo</strong> — Tu amiga, siempre contigo 💛
-            <div style="margin-top: 8px;">Creado por: Jofre Roberto Daniel</div>
-            <div style="margin-top: 4px;">📞 +54 2616715583</div>
-            <div>✉️ cdelgrial@gmail.com</div>
-          </div>
-
-          <div class="quote-box" style="margin-top: 14px; background: linear-gradient(135deg, rgba(255,245,220,1), rgba(253,239,207,0.9)); color:#754d1d; border-color: rgba(215,178,109,0.2);">
-            <div style="font-weight:800; margin-bottom:8px;">💛 Apoya este proyecto</div>
-            <div>Alias: Grumo.Primo.Comico</div>
-            <button class="btn warn" onclick="abrirDonacion()" style="margin-top: 10px;">Colaborar</button>
-          </div>
-
-          <button class="btn ghost" onclick="cerrarSesion()" style="margin-top: 14px;">Cerrar sesión</button>
-        </div>
-      </div>
-    </div>
-
-    <div id="pantalla-comandos" class="pantalla">
-      <div class="premium-shell">
-        <div class="section">
-          <div class="section-header"><span class="badge">🗣️</span> Comandos</div>
-          <p class="subtle">Programa respuestas para tus frases más habituales.</p>
-          <div id="listaComandos" style="margin-top:12px;" class="mini-list"></div>
-          <label class="subtle" style="display:block; margin-top:12px; margin-bottom:8px;">Frase</label>
-          <input type="text" id="fraseComando" placeholder="Ej: estoy cansado" />
-          <label class="subtle" style="display:block; margin-top:8px; margin-bottom:8px;">Acción</label>
-          <select id="accionComando" onchange="mostrarCampoRespuesta()">
-            <option value="medicamentos">Ver mis medicamentos</option>
-            <option value="sos">Abrir ayuda de emergencia</option>
-            <option value="respiracion">Iniciar respiración</option>
-            <option value="musica">Abrir música</option>
-            <option value="cuentos">Abrir cuentos</option>
-            <option value="casa">Guiarme a casa</option>
-            <option value="mensaje">Leer mensaje del día</option>
-            <option value="llamarFamiliar">Avisar a mi familia</option>
-            <option value="personalizado">Respuesta personalizada</option>
-          </select>
-          <label class="subtle" id="etiquetaPersonalizado" style="display:none; margin-top:10px; margin-bottom:8px;">Respuesta</label>
-          <input type="text" id="respuestaPersonalizada" placeholder="Ej: Descansa, estoy contigo" style="display:none;" />
-          <button class="btn primary" onclick="guardarComandoPersonalizado()" style="margin-top: 12px;">Guardar comando</button>
-          <button class="btn ghost" onclick="mostrarPantalla('ajustes')" style="margin-top: 8px;">Volver</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="nav-spacer"></div>
+    <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-menu')">Comenzar 💛</button>
   </div>
 
-  <nav class="nav" id="barraNavegacion">
-    <div class="nav-inner">
-      <button class="nav-btn active" onclick="mostrarPantalla('principal')" id="nav-principal">🏠<span>Inicio</span></button>
-      <button class="nav-btn" onclick="mostrarPantalla('musica')" id="nav-musica">🎧<span>Disfrutar</span></button>
-      <button class="nav-btn" onclick="mostrarPantalla('sos')" id="nav-sos">🆘<span>Ayuda</span></button>
-      <button class="nav-btn" onclick="mostrarPantalla('ajustes')" id="nav-ajustes">⚙️<span>Más</span></button>
+  <div id="pantalla-menu" class="pantalla">
+    <h1 class="titulo-seccion">¿Qué necesitas?</h1>
+
+    <div class="fila" style="margin-top: 20px;">
+      <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-hablar')">Hablar</button>
+      <button class="boton-grande boton-secundario" onclick="siguientePantalla('pantalla-respirar')">Respirar</button>
+      <button class="boton-grande boton-sos" onclick="siguientePantalla('pantalla-sos')">SOS</button>
     </div>
-  </nav>
+
+    <div class="tarjeta" style="margin-top: 22px;">
+      <div class="texto-pequeno">
+        “He buscado construir algo que ilumine el camino de quienes se sienten solos.”
+      </div>
+      <div class="texto-pequeno" style="margin-top: 8px; font-weight: 700; color: #1A237E;">— Jofre Roberto Daniel</div>
+    </div>
+  </div>
+
+  <div id="pantalla-hablar" class="pantalla">
+    <div class="avatar-contenedor hablando" id="avatarHabla">
+      <div class="avatar-esfera"></div>
+      <div class="avatar-ojos">
+        <div class="avatar-ojo"></div>
+        <div class="avatar-ojo"></div>
+      </div>
+      <div class="nombre-avatar">Escucho</div>
+    </div>
+
+    <div class="burbuja-mensaje">
+      <div class="burbuja-texto">Cuéntame qué te está pasando. Estoy aquí para acompañarte sin juzgarte.</div>
+    </div>
+
+    <div class="tarjeta">
+      <textarea class="input-grande" rows="4" placeholder="Escribe lo que sientes..." style="font-size: 18px; resize: none; width: 100%; min-height: 130px; background: #F8F9FF; border-color: #D3D9F0;"></textarea>
+      <button class="boton-grande boton-primario" onclick="alert('Mensaje guardado en tu apoyo emocional 💛')">Enviar</button>
+    </div>
+  </div>
+
+  <div id="pantalla-respirar" class="pantalla">
+    <h1 class="titulo-seccion">Respira conmigo</h1>
+
+    <div class="avatar-contenedor atento">
+      <div class="avatar-esfera"></div>
+      <div class="avatar-ojos">
+        <div class="avatar-ojo"></div>
+        <div class="avatar-ojo"></div>
+      </div>
+      <div class="nombre-avatar">Calma</div>
+    </div>
+
+    <div class="tarjeta">
+      <div class="texto-pequeno" style="font-size: 22px; font-weight: 700; color: #1A237E;">Inhala 4 • Aguanta 4 • Exhala 6</div>
+      <div class="texto-pequeno" style="margin-top: 18px; font-size: 18px;">Siente tu pecho, relaja la mandíbula y sigue el ritmo.</div>
+      <button class="boton-grande boton-secundario" onclick="alert('Ejercicio de respiración activado')" style="margin-top: 16px;">Iniciar</button>
+    </div>
+  </div>
+
+  <div id="pantalla-sos" class="pantalla">
+    <h1 class="titulo-seccion">Apoyo inmediato</h1>
+
+    <div class="fila" style="margin-top: 20px;">
+      <span class="chip">📞 Emergencias</span>
+      <span class="chip">💬 Hablar</span>
+      <span class="chip">🧘 Respirar</span>
+    </div>
+
+    <div class="tarjeta" style="margin-top: 20px;">
+      <div class="texto-pequeno" style="font-size: 18px; font-weight: 700; color: #1A237E;">Si te sientes muy abrumado, pide ayuda ahora mismo.</div>
+      <button class="boton-grande boton-sos" onclick="alert('Llamada de apoyo simulada')" style="margin-top: 16px;">Llamar a apoyo</button>
+      <button class="boton-grande boton-primario" onclick="siguientePantalla('pantalla-menu')" style="margin-top: 10px;">Volver</button>
+    </div>
+  </div>
 
   <script>
-    const pasosTutorial = [
-      { titulo: 'Bienvenido a Contigo', texto: 'Soy tu amiga Contigo. No importa la hora, siempre estoy aquí para ti.' },
-      { titulo: 'Siempre aquí', texto: 'Te ayudo con tus medicamentos, citas médicas y cuidados de salud.' },
-      { titulo: 'Te acompaño a donde vayas', texto: 'Cuando salgas, te acompaño en el camino. Si te pierdes, te guío de vuelta a casa.' },
-      { titulo: 'Momentos de alegría y calma', texto: 'Tengo música, cuentos y ejercicios para cuando necesites calma o alegría.' },
-      { titulo: 'Nunca estás solo', texto: 'Si necesitas ayuda, solo presiona el botón SOS. No estás solo.' },
-      { titulo: '¡Comencemos!', texto: 'Primero protege tu información con un PIN de 4 dígitos.' }
-    ];
-
-    const STORAGE_KEYS = {
-      pin: 'contigo_pin',
-      avatar: 'contigo_avatar',
-      idioma: 'contigo_idioma',
-      comandos: 'contigo_comandos',
-      medicamentos: 'contigo_medicamentos',
-      citas: 'contigo_citas',
-      casa: 'contigo_casa',
-      sos: 'contigo_sos'
-    };
-
-    let pasoActual = 0;
-    let pinGuardado = null;
-    let avatarElegido = '😊';
-    let comandosPersonalizados = [];
-    let medicamentos = [];
-    let citas = [];
-    let telefonosSOS = [];
-    let reconocimientoVoz = null;
-    let intervaloReloj = null;
-    let intervaloRespira = null;
-    let respiraEtapa = 0;
-    let zonaSegura = null;
-    let viajeActivo = false;
-
-    function loadJSON(key, fallback) {
-      try {
-        const raw = localStorage.getItem(key);
-        return raw ? JSON.parse(raw) : fallback;
-      } catch {
-        return fallback;
-      }
+    function siguientePantalla(id) {
+      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+      document.getElementById(id).classList.add('activa');
     }
-
-    function saveJSON(key, value) {
-      localStorage.setItem(key, JSON.stringify(value));
-    }
-
-    function mostrarPantalla(nombre) {
-      document.querySelectorAll('.pantalla').forEach((p) => p.classList.remove('activa'));
-      const pantalla = document.getElementById('pantalla-' + nombre);
-      if (pantalla) pantalla.classList.add('activa');
-      actualizarNavegacion(nombre);
-    }
-
-    function actualizarNavegacion(actual) {
-      document.querySelectorAll('.nav-btn').forEach((btn) => btn.classList.remove('active'));
-      const btn = document.getElementById('nav-' + actual);
-      if (btn) btn.classList.add('active');
-    }
-
-    function comenzar() {
-      const pinGuardadoLocal = localStorage.getItem(STORAGE_KEYS.pin);
-      if (pinGuardadoLocal) {
-        pinGuardado = pinGuardadoLocal;
-        mostrarPantalla('verificar-pin');
-        return;
-      }
-      pasoActual = 0;
-      mostrarPasoTutorial();
-      mostrarPantalla('tutorial');
-    }
-
-    function mostrarPasoTutorial() {
-      const paso = pasosTutorial[pasoActual];
-      document.getElementById('tituloPaso').textContent = paso.titulo;
-      document.getElementById('textoPaso').textContent = paso.texto;
-      document.getElementById('indicadorPaso').textContent = `${pasoActual + 1} / ${pasosTutorial.length}`;
-      const anterior = document.getElementById('btnAnterior');
-      anterior.style.visibility = pasoActual === 0 ? 'hidden' : 'visible';
-      document.getElementById('btnSiguiente').textContent = pasoActual === pasosTutorial.length - 1 ? 'Comenzar' : 'Siguiente';
-    }
-
-    function pasoAnterior() {
-      if (pasoActual > 0) {
-        pasoActual -= 1;
-        mostrarPasoTutorial();
-      }
-    }
-
-    function pasoSiguiente() {
-      if (pasoActual < pasosTutorial.length - 1) {
-        pasoActual += 1;
-        mostrarPasoTutorial();
-      } else {
-        mostrarPantalla('pin');
-      }
-    }
-
-    function guardarPin() {
-      const pin = document.getElementById('pin1').value;
-      if (pin.length !== 4 || Number.isNaN(Number(pin))) {
-        alert('⚠️ Escribe 4 números por favor 💛');
-        return;
-      }
-      pinGuardado = pin;
-      localStorage.setItem(STORAGE_KEYS.pin, pin);
-      alert('✅ PIN guardado correctamente 💛');
-      setTimeout(() => mostrarPantalla('avatar'), 400);
-    }
-
-    function verificarPin() {
-      const pinIngresado = document.getElementById('pinIngreso').value;
-      if (pinIngresado === pinGuardado) {
-        alert('✅ Bienvenido de nuevo 💛');
-        setTimeout(() => entrarApp(), 500);
-      } else {
-        alert('❌ PIN incorrecto. Intenta otra vez 💛');
-        document.getElementById('pinIngreso').value = '';
-      }
-    }
-
-    function elegirAvatar(emoji) {
-      avatarElegido = emoji;
-      document.getElementById('avatarPreview').textContent = emoji;
-      document.querySelectorAll('.avatar-option').forEach((el) => el.classList.remove('selected'));
-      const selected = [...document.querySelectorAll('.avatar-option')].find((el) => el.textContent.trim() === emoji);
-      if (selected) selected.classList.add('selected');
-    }
-
-    function guardarAvatar() {
-      localStorage.setItem(STORAGE_KEYS.avatar, avatarElegido);
-      entrarApp();
-    }
-
-    function entrarApp() {
-      cargarDatosGuardados();
-      mostrarPantalla('principal');
-      iniciarReloj();
-      actualizarSaludo();
-      renderMedicamentos();
-      renderCitas();
-      renderSOS();
-    }
-
-    function iniciarReloj() {
-      const update = () => {
-        const ahora = new Date();
-        const hora = ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        document.getElementById('reloj').textContent = hora;
-      };
-      update();
-      clearInterval(intervaloReloj);
-      intervaloReloj = setInterval(update, 60000);
-    }
-
-    function actualizarSaludo() {
-      const hora = new Date().getHours();
-      let saludo = '¡Buenos días!';
-      if (hora >= 12 && hora < 18) saludo = '¡Buenas tardes!';
-      else if (hora >= 18 || hora < 6) saludo = '¡Buenas noches!';
-      document.getElementById('saludo').textContent = saludo;
-    }
-
-    function leerTexto(texto) {
-      if (!texto || !texto.trim()) return;
-      window.speechSynthesis.cancel();
-      const mensaje = new SpeechSynthesisUtterance(texto);
-      mensaje.lang = 'es-ES';
-      mensaje.rate = parseFloat(document.getElementById('velocidadVoz')?.value || '1');
-      window.speechSynthesis.speak(mensaje);
-    }
-
-    function iniciarReconocimientoVoz() {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        alert('⚠️ Tu navegador no soporta reconocimiento de voz. Puedes seguir usando los botones. 💛');
-        return;
-      }
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      reconocimientoVoz = new SpeechRecognition();
-      reconocimientoVoz.lang = 'es-ES';
-      reconocimientoVoz.continuous = false;
-      reconocimientoVoz.interimResults = false;
-      reconocimientoVoz.onresult = function (event) {
-        const transcripcion = event.results[0][0].transcript.toLowerCase();
-        procesarComandoVoz(transcripcion);
-      };
-      reconocimientoVoz.onerror = function () {
-        alert('🤔 No pude entenderte. Inténtalo de nuevo. 💛');
-      };
-      reconocimientoVoz.start();
-    }
-
-    function procesarComandoVoz(texto) {
-      for (const cmd of comandosPersonalizados) {
-        if (texto.includes(cmd.frase)) {
-          ejecutarAccionPersonalizada(cmd);
-          return;
-        }
-      }
-
-      if (texto.includes('hola') || texto.includes('buenos días') || texto.includes('buenas tardes') || texto.includes('buenas noches')) {
-        leerTexto('¡Hola! Qué alegría escucharte. Soy Contigo, estoy aquí para acompañarte. 💛');
-      } else if (texto.includes('medicamento') || texto.includes('medicinas')) {
-        mostrarPantalla('principal');
-        leerTexto('Aquí están tus medicamentos. No olvides tomarlos a su hora. 💛');
-      } else if (texto.includes('ayuda') || texto.includes('socorro') || texto.includes('emergencia')) {
-        mostrarPantalla('sos');
-        leerTexto('Estoy aquí. No estás solo. Llama a quien necesites. 💛');
-      } else if (texto.includes('mensaje') || texto.includes('día')) {
-        leerTexto(document.getElementById('mensajeDelDia').textContent);
-      } else if (texto.includes('respirar') || texto.includes('calma')) {
-        mostrarPantalla('respiracion');
-        leerTexto('Respira conmigo. Todo está bien. 💛');
-      } else if (texto.includes('música') || texto.includes('musica') || texto.includes('canciones')) {
-        mostrarPantalla('musica');
-        leerTexto('Aquí está tu música. Disfrútala con calma. 🎵💛');
-      } else if (texto.includes('cuento') || texto.includes('cuentos')) {
-        mostrarPantalla('cuentos');
-        leerTexto('Aquí tienes tus cuentos. 📚💛');
-      } else if (texto.includes('casa') || texto.includes('volver')) {
-        guiarACasa();
-      } else {
-        leerTexto('Estoy aquí para ayudarte. Puedes pedirme música, calma, ayuda o el mensaje del día. 💛');
-      }
-    }
-
-    function renderMedicamentos() {
-      const container = document.getElementById('listaMedicamentos');
-      const recetas = document.getElementById('listaRecetas');
-      if (!medicamentos.length) {
-        container.innerHTML = '<div class="mini-item">No tienes recordatorios activos.</div>';
-        recetas.innerHTML = '<div class="mini-item">Aún no has agregado medicamentos.</div>';
-        return;
-      }
-
-      container.innerHTML = medicamentos.map((item) => `
-        <div class="mini-item">
-          <strong>${item.nombre}</strong>
-          ${item.dosis ? item.dosis : 'Sin dosis'}<br>
-          ${item.medico ? `Médico: ${item.medico}<br>` : ''}
-          ${item.fecha ? `Fecha: ${item.fecha}` : ''}
-        </div>
-      `).join('');
-
-      recetas.innerHTML = medicamentos.map((item) => `
-        <div class="list-item">
-          <strong>${item.nombre}</strong><br>
-          Dosis: ${item.dosis || 'Sin dosis'}<br>
-          Médico: ${item.medico || 'Sin médico'}<br>
-          Fecha: ${item.fecha || 'Sin fecha'}
-        </div>
-      `).join('');
-    }
-
-    function guardarReceta() {
-      const nombre = document.getElementById('nombreReceta').value.trim();
-      const dosis = document.getElementById('dosisReceta').value.trim();
-      const medico = document.getElementById('medicoReceta').value.trim();
-      const fecha = document.getElementById('fechaReceta').value;
-      const notas = document.getElementById('notasReceta').value.trim();
-
-      if (!nombre) {
-        alert('Escribe el nombre del medicamento 💛');
-        return;
-      }
-
-      medicamentos.push({ nombre, dosis, medico, fecha, notas });
-      saveJSON(STORAGE_KEYS.medicamentos, medicamentos);
-      renderMedicamentos();
-      document.getElementById('nombreReceta').value = '';
-      document.getElementById('dosisReceta').value = '';
-      document.getElementById('medicoReceta').value = '';
-      document.getElementById('fechaReceta').value = '';
-      document.getElementById('notasReceta').value = '';
-      alert('✅ Receta guardada con éxito 💛');
-      mostrarPantalla('principal');
-    }
-
-    function renderCitas() {
-      const container = document.getElementById('listaCitas');
-      if (!citas.length) {
-        container.innerHTML = '<div class="mini-item">No tienes citas programadas.</div>';
-        return;
-      }
-
-      container.innerHTML = citas.map((item) => `
-        <div class="mini-item">
-          <strong>${item.nombre}</strong>
-          ${item.fecha ? `<br>Fecha: ${item.fecha}` : ''}
-          ${item.hora ? `<br>Hora: ${item.hora}` : ''}
-          ${item.recordatorio ? `<br>Recordatorio: ${item.recordatorio}` : ''}
-        </div>
-      `).join('');
-    }
-
-    function guardarCita() {
-      const nombre = document.getElementById('nombreCita').value.trim();
-      const fecha = document.getElementById('fechaCita').value;
-      const hora = document.getElementById('horaCita').value;
-      const recordatorio = document.getElementById('avisoCita').value;
-
-      if (!nombre || !fecha || !hora) {
-        alert('Completa el nombre, fecha y hora de la cita 💛');
-        return;
-      }
-
-      citas.push({ nombre, fecha, hora, recordatorio });
-      saveJSON(STORAGE_KEYS.citas, citas);
-      renderCitas();
-      document.getElementById('nombreCita').value = '';
-      document.getElementById('fechaCita').value = '';
-      document.getElementById('horaCita').value = '';
-      document.getElementById('avisoCita').value = '1d';
-      alert('✅ Cita guardada con éxito 💛');
-      mostrarPantalla('principal');
-    }
-
-    function renderSOS() {
-      const lista = document.getElementById('listaSOS');
-      if (!telefonosSOS.length) {
-        lista.innerHTML = `
-          <div class="sos-row"><span>🚑 Emergencias</span><strong>107</strong></div>
-          <div class="sos-row"><span>🚔 Policía</span><strong>101</strong></div>
-          <div class="sos-row"><span>🚒 Bomberos</span><strong>100</strong></div>
-          <div class="sos-row"><span>🏥 Emergencias</span><strong>911</strong></div>
-        `;
-        return;
-      }
-
-      lista.innerHTML = [
-        ...telefonosSOS.map((item) => `
-          <div class="sos-row"><span>${item.nombre}</span><strong><a href="tel:${item.telefono}" style="color:inherit;text-decoration:none;">${item.telefono}</a></strong></div>
-        `),
-        '<div class="sos-row"><span>🚑 Emergencias</span><strong>107</strong></div>',
-        '<div class="sos-row"><span>🚔 Policía</span><strong>101</strong></div>',
-        '<div class="sos-row"><span>🚒 Bomberos</span><strong>100</strong></div>',
-        '<div class="sos-row"><span>🏥 Emergencias</span><strong>911</strong></div>'
-      ].join('');
-    }
-
-    function agregarTelefonoSOS() {
-      const nombre = prompt('Nombre de la persona:');
-      const telefono = prompt('Teléfono:');
-      if (!nombre || !telefono) {
-        alert('Debes completar nombre y teléfono 💛');
-        return;
-      }
-      telefonosSOS.push({ nombre, telefono });
-      saveJSON(STORAGE_KEYS.sos, telefonosSOS);
-      renderSOS();
-      alert('✅ Contacto agregado 💛');
-    }
-
-    function mostrarCampoRespuesta() { 
-      const select = document.getElementById('accionComando');
-      const campo = document.getElementById('respuestaPersonalizada');
-      const etiqueta = document.getElementById('etiquetaPersonalizado');
-      if (select.value === 'personalizado') {
-        campo.style.display = 'block';
-        etiqueta.style.display = 'block';
-      } else {
-        campo.style.display = 'none';
-        etiqueta.style.display = 'none';
-      }
-    }
-
-    function guardarComandoPersonalizado() {
-      const frase = document.getElementById('fraseComando').value.trim().toLowerCase();
-      const accion = document.getElementById('accionComando').value;
-      const respuesta = document.getElementById('respuestaPersonalizada').value.trim();
-      if (!frase) {
-        alert('Escribe la frase, por favor 💛');
-        return;
-      }
-      comandosPersonalizados.push({ frase, accion, respuesta });
-      saveJSON(STORAGE_KEYS.comandos, comandosPersonalizados);
-      actualizarListaComandos();
-      alert(`✅ Comando guardado: "${frase}" 💛`);
-      document.getElementById('fraseComando').value = '';
-      document.getElementById('respuestaPersonalizada').value = '';
-      mostrarCampoRespuesta();
-    }
-
-    function actualizarListaComandos() {
-      const lista = document.getElementById('listaComandos');
-      const nombresAcciones = {
-        medicamentos: 'Ver mis medicamentos',
-        sos: 'Abrir ayuda',
-        respiracion: 'Iniciar respiración',
-        musica: 'Abrir música',
-        cuentos: 'Abrir cuentos',
-        casa: 'Guiarme a casa',
-        mensaje: 'Leer mensaje del día',
-        llamarFamiliar: 'Avisar a mi familia',
-        personalizado: 'Respuesta personalizada'
-      };
-
-      if (!comandosPersonalizados.length) {
-        lista.innerHTML = '<div class="mini-item">Aún no has agregado comandos.</div>';
-        return;
-      }
-
-      lista.innerHTML = comandosPersonalizados.map((cmd, i) => `
-        <div class="mini-item">
-          <strong>"${cmd.frase}"</strong>
-          <div style="color: var(--muted);">${nombresAcciones[cmd.accion] || 'Acción'}</div>
-          ${cmd.accion === 'personalizado' ? `<div style="color: var(--muted); margin-top:6px;">Respuesta: "${cmd.respuesta}"</div>` : ''}
-          <button class="btn ghost small" onclick="eliminarComando(${i})" style="margin-top:8px;">Eliminar</button>
-        </div>
-      `).join('');
-    }
-
-    function eliminarComando(indice) {
-      comandosPersonalizados.splice(indice, 1);
-      saveJSON(STORAGE_KEYS.comandos, comandosPersonalizados);
-      actualizarListaComandos();
-    }
-
-    function ejecutarAccionPersonalizada(comando) {
-      switch (comando.accion) {
-        case 'medicamentos':
-          mostrarPantalla('principal');
-          leerTexto('Aquí están tus medicamentos. 💛');
-          break;
-        case 'sos':
-          mostrarPantalla('sos');
-          leerTexto('Estoy aquí contigo. 💛');
-          break;
-        case 'respiracion':
-          mostrarPantalla('respiracion');
-          leerTexto('Respira conmigo. 💛');
-          break;
-        case 'musica':
-          mostrarPantalla('musica');
-          leerTexto('Aquí está tu música. 🎵💛');
-          break;
-        case 'cuentos':
-          mostrarPantalla('cuentos');
-          leerTexto('Aquí están tus cuentos. 📚💛');
-          break;
-        case 'casa':
-          guiarACasa();
-          break;
-        case 'mensaje':
-          leerTexto(document.getElementById('mensajeDelDia').textContent);
-          break;
-        case 'llamarFamiliar':
-          notificarFamilia();
-          break;
-        case 'personalizado':
-          leerTexto(comando.respuesta || 'Estoy aquí contigo. 💛');
-          break;
-      }
-    }
-
-    function obtenerUbicacion() {
-      if (!navigator.geolocation) {
-        alert('⚠️ Tu navegador no soporta ubicación.');
-        return;
-      }
-      document.getElementById('mensajeUbicacion').textContent = '📍 Buscando tu ubicación...';
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          document.getElementById('mensajeUbicacion').innerHTML = `✅ Te encontré 💛<br>Latitud: ${pos.coords.latitude.toFixed(4)}<br>Longitud: ${pos.coords.longitude.toFixed(4)}`;
-          mostrarPantalla('perdido');
-        },
-        () => {
-          document.getElementById('mensajeUbicacion').textContent = '❌ No pude obtener tu ubicación. ¿Estás bien? 💛';
-          mostrarPantalla('perdido');
-        }
-      );
-    }
-
-    function definirZonaSegura() {
-      if (!navigator.geolocation) {
-        alert('⚠️ No se puede acceder a la ubicación');
-        return;
-      }
-      navigator.geolocation.getCurrentPosition((pos) => {
-        zonaSegura = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        localStorage.setItem(STORAGE_KEYS.casa, JSON.stringify(zonaSegura));
-        alert('🏠 ¡Casa guardada con éxito! 💛');
-      });
-    }
-
-    function guiarACasa() {
-      const guardada = localStorage.getItem(STORAGE_KEYS.casa);
-      if (guardada) zonaSegura = JSON.parse(guardada);
-      if (!zonaSegura) {
-        alert('⚠️ Aún no has definido tu casa. Primero guarda tu zona segura 💛');
-        return;
-      }
-      iniciarViajeConDestino('Tu casa');
-    }
-
-    function iniciarViaje() {
-      const destino = document.getElementById('destinoViaje').value.trim();
-      if (!destino) {
-        alert('Escribe a dónde vas, por favor 💛');
-        return;
-      }
-      iniciarViajeConDestino(destino);
-    }
-
-    function iniciarViajeConDestino(destino) {
-      viajeActivo = true;
-      document.getElementById('destinoActual').textContent = destino;
-      document.getElementById('tiempoLlegada').textContent = 'Calculando...';
-      document.getElementById('instruccionCamino').textContent = 'Sigue caminando con calma. Estoy contigo 💛';
-      mostrarPantalla('viaje');
-      leerTexto(`Vamos hacia ${destino}. Te acompaño en el camino. 💛`);
-    }
-
-    function verRutaSegura() {
-      leerTexto('Sigues en el camino correcto. No te preocupes. Estoy aquí contigo. 💛');
-      alert('✅ Vamos bien. Sigue con calma 💛');
-    }
-
-    function finalizarViaje() {
-      viajeActivo = false;
-      alert('🎉 ¡Has llegado! Qué alegría 💛');
-      leerTexto('¡Felicidades! Ya llegaste. Descansa bien. 💛');
-      document.getElementById('destinoViaje').value = '';
-      mostrarPantalla('principal');
-    }
-
-    function meHePerdido() {
-      viajeActivo = false;
-      mostrarPantalla('perdido');
-      leerTexto('No te asustes. Estoy aquí contigo. Vamos a buscar el camino. 💛');
-      obtenerUbicacion();
-    }
-
-    function iniciarRespiracion() {
-      respiraEtapa = 0;
-      clearInterval(intervaloRespira);
-      const circulo = document.getElementById('circuloRespira');
-      const texto = document.getElementById('textoRespira');
-      const pasos = [
-        { clase: 'inhala', texto: 'Inhala despacio... 🌬️', duracion: 4000 },
-        { clase: 'sostiene', texto: 'Sostén el aire... ✨', duracion: 4000 },
-        { clase: 'exhala', texto: 'Suelta el aire... 💨', duracion: 6000 }
-      ];
-      const ciclo = () => {
-        const paso = pasos[respiraEtapa];
-        circulo.className = 'respira-circle ' + paso.clase;
-        texto.textContent = paso.texto;
-        respiraEtapa = (respiraEtapa + 1) % pasos.length;
-      };
-      ciclo();
-      intervaloRespira = setInterval(ciclo, 4000);
-    }
-
-    function detenerRespiracion() {
-      clearInterval(intervaloRespira);
-      document.getElementById('circuloRespira').className = 'respira-circle';
-      document.getElementById('textoRespira').textContent = 'Respira conmigo... 💛';
-    }
-
-    function llamarEmergencia() {
-      window.location.href = 'tel:911';
-    }
-
-    function notificarFamilia() {
-      alert('📞 He avisado a tus personas de confianza. Están contigo en este momento. 💛');
-      leerTexto('He avisado a tu familia. No estás solo. 💛');
-    }
-
-    function enviarRespaldo() {
-      const correo = prompt('Escribe tu correo para recibir el respaldo:');
-      if (!correo) {
-        alert('Escribe tu correo, por favor 💛');
-        return;
-      }
-      const respaldo = {
-        fecha: new Date().toLocaleString(),
-        avatar: avatarElegido,
-        medicamentos,
-        citas,
-        contactos: telefonosSOS,
-        comandos: comandosPersonalizados,
-        zonaSegura,
-      };
-      const contenido = JSON.stringify(respaldo, null, 2);
-      const blob = new Blob([contenido], { type: 'text/plain' });
-      const enlace = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = enlace;
-      a.download = `respaldo-contigo-${new Date().toISOString().slice(0, 10)}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(enlace);
-      alert('✅ ¡Respaldo guardado! Guárdalo en un lugar seguro 💛');
-    }
-
-    function abrirDonacion() {
-      alert('💛 Gracias por tu generosidad!\n\nAlias: Grumo.Primo.Comico\n\nQue la vida te devuelva multiplicado todo lo que das. 💚✨');
-    }
-
-    function cambiarIdioma(codigo) {
-      localStorage.setItem(STORAGE_KEYS.idioma, codigo);
-      alert('✅ Idioma cambiado con éxito 💛');
-    }
-
-    function cargarDatosGuardados() {
-      const guardadoAvatar = localStorage.getItem(STORAGE_KEYS.avatar);
-      if (guardadoAvatar) avatarElegido = guardadoAvatar;
-      const guardadoIdioma = localStorage.getItem(STORAGE_KEYS.idioma);
-      if (guardadoIdioma) document.getElementById('selectorIdioma').value = guardadoIdioma;
-      const guardadaCasa = localStorage.getItem(STORAGE_KEYS.casa);
-      if (guardadaCasa) zonaSegura = JSON.parse(guardadaCasa);
-      const guardadoSOS = localStorage.getItem(STORAGE_KEYS.sos);
-      if (guardadoSOS) telefonosSOS = JSON.parse(guardadoSOS);
-      medicamentos = loadJSON(STORAGE_KEYS.medicamentos, []);
-      citas = loadJSON(STORAGE_KEYS.citas, []);
-      comandosPersonalizados = loadJSON(STORAGE_KEYS.comandos, []);
-      actualizarListaComandos();
-      renderMedicamentos();
-      renderCitas();
-      renderSOS();
-      const avatarPreview = document.getElementById('avatarPreview');
-      if (avatarPreview) avatarPreview.textContent = avatarElegido;
-    }
-
-    function cerrarSesion() {
-      if (confirm('¿Seguro que quieres cerrar sesión? 💛')) {
-        mostrarPantalla('inicio');
-        clearInterval(intervaloReloj);
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      document.getElementById('btnAnterior').style.visibility = 'hidden';
-      document.getElementById('selectorIdioma').value = 'es';
-      mostrarPantalla('inicio');
-      actualizarListaComandos();
-      renderSOS();
-    });
   </script>
 </body>
 </html>
