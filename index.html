@@ -9,7 +9,6 @@
     :root {
       --bg: #f4f1ee;
       --panel: rgba(255,255,255,0.86);
-      --panel-strong: #fff;
       --primary: #1f2a44;
       --primary-soft: #edf3ff;
       --gold: #d7b26d;
@@ -57,7 +56,6 @@
     .hero {
       background: linear-gradient(160deg, rgba(31,42,68,1) 0%, rgba(48,63,92,0.96) 36%, rgba(103,118,157,0.97) 100%);
       border-radius: var(--radius-xl);
-      box-shadow: 0 20px 40px rgba(20,24,35,0.14);
       padding: 26px 22px 20px;
       color: white;
       border: 1px solid rgba(255,255,255,0.12);
@@ -184,7 +182,7 @@
       line-height: 1.6;
     }
 
-    .muted-input, input, textarea, select {
+    input, textarea, select {
       width: 100%;
       border: 1px solid rgba(31,42,68,0.12);
       background: rgba(248,250,252,0.9);
@@ -195,7 +193,7 @@
       outline: none;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
-    .muted-input:focus, input:focus, textarea:focus, select:focus {
+    input:focus, textarea:focus, select:focus {
       border-color: rgba(31,42,68,0.25);
       box-shadow: 0 0 0 4px rgba(31,42,68,0.08);
       background: white;
@@ -224,6 +222,17 @@
       line-height: 1.5;
     }
     .mini-item strong { color: var(--primary); display: block; margin-bottom: 4px; }
+
+    .card-list { display: grid; gap: 10px; }
+    .list-item {
+      background: rgba(248,250,252,0.9);
+      border: 1px solid rgba(31,42,68,0.08);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .list-item strong { color: var(--primary); }
 
     .status-box {
       display: flex;
@@ -303,6 +312,24 @@
     .respira-circle.inhala { transform: scale(1.28); background: linear-gradient(135deg, #bfd6ff, #b7d7ff); }
     .respira-circle.sostiene { transform: scale(1.42); background: linear-gradient(135deg, #d9d1ff, #c7d0ff); }
     .respira-circle.exhala { transform: scale(1); background: linear-gradient(135deg, #dfeeff, #cfe3ff); }
+
+    .avatar-option {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: rgba(248,250,252,0.7);
+      border: 1px solid transparent;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .avatar-option:hover, .avatar-option.selected {
+      background: rgba(234,240,255,0.9);
+      border-color: rgba(31,42,68,0.15);
+      transform: translateY(-1px);
+    }
 
     @media (max-width: 420px) {
       body { padding: 10px; }
@@ -425,16 +452,16 @@
 
         <div class="section">
           <div class="section-header"><span class="badge">💊</span> Salud</div>
-          <div class="mini-item">No tienes recordatorios activos.</div>
+          <div id="listaMedicamentos" class="card-list"></div>
           <div class="row" style="margin-top: 12px;">
-            <button class="btn ghost" onclick="alert('Función disponible en versión completa 💛')">Agregar</button>
+            <button class="btn ghost" onclick="mostrarPantalla('libro-recetas')">Agregar</button>
             <button class="btn secondary" onclick="mostrarPantalla('libro-recetas')">Recetas</button>
           </div>
         </div>
 
         <div class="section">
           <div class="section-header"><span class="badge">📅</span> Citas</div>
-          <div class="mini-item">No tienes citas programadas.</div>
+          <div id="listaCitas" class="card-list"></div>
           <button class="btn ghost" onclick="mostrarPantalla('citas')" style="margin-top: 12px;">Agregar cita</button>
         </div>
 
@@ -492,12 +519,7 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">🆘</span> SOS</div>
-          <div class="sos-list">
-            <div class="sos-row"><span>🚑 Emergencias</span><strong>107</strong></div>
-            <div class="sos-row"><span>🚔 Policía</span><strong>101</strong></div>
-            <div class="sos-row"><span>🚒 Bomberos</span><strong>100</strong></div>
-            <div class="sos-row"><span>🏥 Emergencias</span><strong>911</strong></div>
-          </div>
+          <div class="sos-list" id="listaSOS"></div>
           <button class="btn danger" style="margin-top: 12px;" onclick="llamarEmergencia()">Llamar ahora</button>
           <button class="btn ghost" style="margin-top: 8px;" onclick="notificarFamilia()">Avisar a mi familia</button>
           <button class="btn ghost" style="margin-top: 8px;" onclick="agregarTelefonoSOS()">Agregar contacto</button>
@@ -509,7 +531,7 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">📖</span> Mi libro</div>
-          <div class="mini-item">Aún no has agregado medicamentos.</div>
+          <div id="listaRecetas" class="card-list"></div>
           <label class="subtle" style="display:block; margin-top:12px; margin-bottom:8px;">Nombre</label>
           <input type="text" id="nombreReceta" placeholder="Paracetamol" />
           <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Dosis</label>
@@ -519,7 +541,7 @@
           <label class="subtle" style="display:block; margin-top:10px; margin-bottom:8px;">Fecha</label>
           <input type="date" id="fechaReceta" />
           <textarea id="notasReceta" rows="2" placeholder="Observaciones" style="margin-top: 10px;"></textarea>
-          <button class="btn primary" onclick="alert('✅ Receta guardada con éxito 💛')" style="margin-top: 12px;">Guardar</button>
+          <button class="btn primary" onclick="guardarReceta()" style="margin-top: 12px;">Guardar</button>
           <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
@@ -541,7 +563,7 @@
             <option value="3d">3 días antes</option>
             <option value="1s">1 semana antes</option>
           </select>
-          <button class="btn primary" onclick="alert('✅ Cita guardada con éxito 💛')" style="margin-top: 12px;">Guardar cita</button>
+          <button class="btn primary" onclick="guardarCita()" style="margin-top: 12px;">Guardar cita</button>
           <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
@@ -564,7 +586,7 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">🎵</span> Música</div>
-          <div class="mini-item">Tu lista está vacía por ahora.</div>
+          <div id="listaMusica" class="mini-item">Tu lista está vacía por ahora.</div>
           <input type="text" id="buscarMusica" placeholder="Buscar canción o artista" style="margin-top: 12px;" />
           <button class="btn primary" onclick="alert('🎵 Función de búsqueda disponible 💛')" style="margin-top: 10px;">Buscar</button>
           <input type="text" id="nombreCancion" placeholder="Nombre de la canción" style="margin-top: 12px;" />
@@ -680,17 +702,43 @@
       { titulo: '¡Comencemos!', texto: 'Primero protege tu información con un PIN de 4 dígitos.' }
     ];
 
+    const STORAGE_KEYS = {
+      pin: 'contigo_pin',
+      avatar: 'contigo_avatar',
+      idioma: 'contigo_idioma',
+      comandos: 'contigo_comandos',
+      medicamentos: 'contigo_medicamentos',
+      citas: 'contigo_citas',
+      casa: 'contigo_casa',
+      sos: 'contigo_sos'
+    };
+
     let pasoActual = 0;
     let pinGuardado = null;
     let avatarElegido = '😊';
     let comandosPersonalizados = [];
+    let medicamentos = [];
+    let citas = [];
+    let telefonosSOS = [];
     let reconocimientoVoz = null;
     let intervaloReloj = null;
     let intervaloRespira = null;
     let respiraEtapa = 0;
     let zonaSegura = null;
     let viajeActivo = false;
-    let telefonosSOS = [];
+
+    function loadJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function saveJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
 
     function mostrarPantalla(nombre) {
       document.querySelectorAll('.pantalla').forEach((p) => p.classList.remove('activa'));
@@ -706,7 +754,7 @@
     }
 
     function comenzar() {
-      const pinGuardadoLocal = localStorage.getItem('contigo_pin');
+      const pinGuardadoLocal = localStorage.getItem(STORAGE_KEYS.pin);
       if (pinGuardadoLocal) {
         pinGuardado = pinGuardadoLocal;
         mostrarPantalla('verificar-pin');
@@ -750,7 +798,7 @@
         return;
       }
       pinGuardado = pin;
-      localStorage.setItem('contigo_pin', pin);
+      localStorage.setItem(STORAGE_KEYS.pin, pin);
       alert('✅ PIN guardado correctamente 💛');
       setTimeout(() => mostrarPantalla('avatar'), 400);
     }
@@ -775,7 +823,7 @@
     }
 
     function guardarAvatar() {
-      localStorage.setItem('contigo_avatar', avatarElegido);
+      localStorage.setItem(STORAGE_KEYS.avatar, avatarElegido);
       entrarApp();
     }
 
@@ -784,6 +832,9 @@
       mostrarPantalla('principal');
       iniciarReloj();
       actualizarSaludo();
+      renderMedicamentos();
+      renderCitas();
+      renderSOS();
     }
 
     function iniciarReloj() {
@@ -868,7 +919,134 @@
       }
     }
 
-    function mostrarCampoRespuesta() {
+    function renderMedicamentos() {
+      const container = document.getElementById('listaMedicamentos');
+      const recetas = document.getElementById('listaRecetas');
+      if (!medicamentos.length) {
+        container.innerHTML = '<div class="mini-item">No tienes recordatorios activos.</div>';
+        recetas.innerHTML = '<div class="mini-item">Aún no has agregado medicamentos.</div>';
+        return;
+      }
+
+      container.innerHTML = medicamentos.map((item) => `
+        <div class="mini-item">
+          <strong>${item.nombre}</strong>
+          ${item.dosis ? item.dosis : 'Sin dosis'}<br>
+          ${item.medico ? `Médico: ${item.medico}<br>` : ''}
+          ${item.fecha ? `Fecha: ${item.fecha}` : ''}
+        </div>
+      `).join('');
+
+      recetas.innerHTML = medicamentos.map((item) => `
+        <div class="list-item">
+          <strong>${item.nombre}</strong><br>
+          Dosis: ${item.dosis || 'Sin dosis'}<br>
+          Médico: ${item.medico || 'Sin médico'}<br>
+          Fecha: ${item.fecha || 'Sin fecha'}
+        </div>
+      `).join('');
+    }
+
+    function guardarReceta() {
+      const nombre = document.getElementById('nombreReceta').value.trim();
+      const dosis = document.getElementById('dosisReceta').value.trim();
+      const medico = document.getElementById('medicoReceta').value.trim();
+      const fecha = document.getElementById('fechaReceta').value;
+      const notas = document.getElementById('notasReceta').value.trim();
+
+      if (!nombre) {
+        alert('Escribe el nombre del medicamento 💛');
+        return;
+      }
+
+      medicamentos.push({ nombre, dosis, medico, fecha, notas });
+      saveJSON(STORAGE_KEYS.medicamentos, medicamentos);
+      renderMedicamentos();
+      document.getElementById('nombreReceta').value = '';
+      document.getElementById('dosisReceta').value = '';
+      document.getElementById('medicoReceta').value = '';
+      document.getElementById('fechaReceta').value = '';
+      document.getElementById('notasReceta').value = '';
+      alert('✅ Receta guardada con éxito 💛');
+      mostrarPantalla('principal');
+    }
+
+    function renderCitas() {
+      const container = document.getElementById('listaCitas');
+      if (!citas.length) {
+        container.innerHTML = '<div class="mini-item">No tienes citas programadas.</div>';
+        return;
+      }
+
+      container.innerHTML = citas.map((item) => `
+        <div class="mini-item">
+          <strong>${item.nombre}</strong>
+          ${item.fecha ? `<br>Fecha: ${item.fecha}` : ''}
+          ${item.hora ? `<br>Hora: ${item.hora}` : ''}
+          ${item.recordatorio ? `<br>Recordatorio: ${item.recordatorio}` : ''}
+        </div>
+      `).join('');
+    }
+
+    function guardarCita() {
+      const nombre = document.getElementById('nombreCita').value.trim();
+      const fecha = document.getElementById('fechaCita').value;
+      const hora = document.getElementById('horaCita').value;
+      const recordatorio = document.getElementById('avisoCita').value;
+
+      if (!nombre || !fecha || !hora) {
+        alert('Completa el nombre, fecha y hora de la cita 💛');
+        return;
+      }
+
+      citas.push({ nombre, fecha, hora, recordatorio });
+      saveJSON(STORAGE_KEYS.citas, citas);
+      renderCitas();
+      document.getElementById('nombreCita').value = '';
+      document.getElementById('fechaCita').value = '';
+      document.getElementById('horaCita').value = '';
+      document.getElementById('avisoCita').value = '1d';
+      alert('✅ Cita guardada con éxito 💛');
+      mostrarPantalla('principal');
+    }
+
+    function renderSOS() {
+      const lista = document.getElementById('listaSOS');
+      if (!telefonosSOS.length) {
+        lista.innerHTML = `
+          <div class="sos-row"><span>🚑 Emergencias</span><strong>107</strong></div>
+          <div class="sos-row"><span>🚔 Policía</span><strong>101</strong></div>
+          <div class="sos-row"><span>🚒 Bomberos</span><strong>100</strong></div>
+          <div class="sos-row"><span>🏥 Emergencias</span><strong>911</strong></div>
+        `;
+        return;
+      }
+
+      lista.innerHTML = [
+        ...telefonosSOS.map((item) => `
+          <div class="sos-row"><span>${item.nombre}</span><strong><a href="tel:${item.telefono}" style="color:inherit;text-decoration:none;">${item.telefono}</a></strong></div>
+        `),
+        '<div class="sos-row"><span>🚑 Emergencias</span><strong>107</strong></div>',
+        '<div class="sos-row"><span>🚔 Policía</span><strong>101</strong></div>',
+        '<div class="sos-row"><span>🚒 Bomberos</span><strong>100</strong></div>',
+        '<div class="sos-row"><span>🏥 Emergencias</span><strong>911</strong></div>'
+      ].join('');
+    }
+
+    function agregarTelefonoSOS() {
+      const nombre = prompt('Nombre de la persona:');
+      const telefono = prompt('Teléfono:');
+      if (!nombre || !telefono) {
+        alert('Debes completar nombre y teléfono 💛');
+        return;
+      }
+      telefonosSOS.push({ nombre, telefono });
+      saveJSON(STORAGE_KEYS.sos, telefonosSOS);
+      renderSOS();
+      alert('✅ Contacto agregado 💛');
+    }
+
+    function mostrarCampoRespuesta() { 
       const select = document.getElementById('accionComando');
       const campo = document.getElementById('respuestaPersonalizada');
       const etiqueta = document.getElementById('etiquetaPersonalizado');
@@ -890,7 +1068,7 @@
         return;
       }
       comandosPersonalizados.push({ frase, accion, respuesta });
-      localStorage.setItem('comandosPersonalizados', JSON.stringify(comandosPersonalizados));
+      saveJSON(STORAGE_KEYS.comandos, comandosPersonalizados);
       actualizarListaComandos();
       alert(`✅ Comando guardado: "${frase}" 💛`);
       document.getElementById('fraseComando').value = '';
@@ -929,7 +1107,7 @@
 
     function eliminarComando(indice) {
       comandosPersonalizados.splice(indice, 1);
-      localStorage.setItem('comandosPersonalizados', JSON.stringify(comandosPersonalizados));
+      saveJSON(STORAGE_KEYS.comandos, comandosPersonalizados);
       actualizarListaComandos();
     }
 
@@ -995,18 +1173,16 @@
       }
       navigator.geolocation.getCurrentPosition((pos) => {
         zonaSegura = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        localStorage.setItem('contigo_casa', JSON.stringify(zonaSegura));
+        localStorage.setItem(STORAGE_KEYS.casa, JSON.stringify(zonaSegura));
         alert('🏠 ¡Casa guardada con éxito! 💛');
       });
     }
 
     function guiarACasa() {
-      const guardada = localStorage.getItem('contigo_casa');
-      if (guardada) {
-        zonaSegura = JSON.parse(guardada);
-      }
+      const guardada = localStorage.getItem(STORAGE_KEYS.casa);
+      if (guardada) zonaSegura = JSON.parse(guardada);
       if (!zonaSegura) {
-        alert('⚠️ Aún no has definido tu casa. Toca “Definir mi casa” primero 💛');
+        alert('⚠️ Aún no has definido tu casa. Primero guarda tu zona segura 💛');
         return;
       }
       iniciarViajeConDestino('Tu casa');
@@ -1085,16 +1261,6 @@
       leerTexto('He avisado a tu familia. No estás solo. 💛');
     }
 
-    function agregarTelefonoSOS() {
-      const nombre = prompt('Nombre de la persona:');
-      const tel = prompt('Teléfono:');
-      if (nombre && tel) {
-        telefonosSOS.push({ nombre, tel });
-        localStorage.setItem('contigo_sos', JSON.stringify(telefonosSOS));
-        alert('✅ Contacto agregado 💛');
-      }
-    }
-
     function enviarRespaldo() {
       const correo = prompt('Escribe tu correo para recibir el respaldo:');
       if (!correo) {
@@ -1104,9 +1270,11 @@
       const respaldo = {
         fecha: new Date().toLocaleString(),
         avatar: avatarElegido,
+        medicamentos,
+        citas,
+        contactos: telefonosSOS,
         comandos: comandosPersonalizados,
         zonaSegura,
-        telefonosSOS
       };
       const contenido = JSON.stringify(respaldo, null, 2);
       const blob = new Blob([contenido], { type: 'text/plain' });
@@ -1126,39 +1294,43 @@
     }
 
     function cambiarIdioma(codigo) {
-      localStorage.setItem('contigo_idioma', codigo);
+      localStorage.setItem(STORAGE_KEYS.idioma, codigo);
       alert('✅ Idioma cambiado con éxito 💛');
     }
 
     function cargarDatosGuardados() {
-      const guardadoAvatar = localStorage.getItem('contigo_avatar');
+      const guardadoAvatar = localStorage.getItem(STORAGE_KEYS.avatar);
       if (guardadoAvatar) avatarElegido = guardadoAvatar;
-      const guardadoIdioma = localStorage.getItem('contigo_idioma');
+      const guardadoIdioma = localStorage.getItem(STORAGE_KEYS.idioma);
       if (guardadoIdioma) document.getElementById('selectorIdioma').value = guardadoIdioma;
-      const guardadoCasa = localStorage.getItem('contigo_casa');
-      if (guardadoCasa) zonaSegura = JSON.parse(guardadoCasa);
-      const guardadoSOS = localStorage.getItem('contigo_sos');
+      const guardadaCasa = localStorage.getItem(STORAGE_KEYS.casa);
+      if (guardadaCasa) zonaSegura = JSON.parse(guardadaCasa);
+      const guardadoSOS = localStorage.getItem(STORAGE_KEYS.sos);
       if (guardadoSOS) telefonosSOS = JSON.parse(guardadoSOS);
-      comandosPersonalizados = JSON.parse(localStorage.getItem('comandosPersonalizados') || '[]');
+      medicamentos = loadJSON(STORAGE_KEYS.medicamentos, []);
+      citas = loadJSON(STORAGE_KEYS.citas, []);
+      comandosPersonalizados = loadJSON(STORAGE_KEYS.comandos, []);
       actualizarListaComandos();
-      document.getElementById('avatarPreview').textContent = avatarElegido;
+      renderMedicamentos();
+      renderCitas();
+      renderSOS();
+      const avatarPreview = document.getElementById('avatarPreview');
+      if (avatarPreview) avatarPreview.textContent = avatarElegido;
     }
 
     function cerrarSesion() {
       if (confirm('¿Seguro que quieres cerrar sesión? 💛')) {
         mostrarPantalla('inicio');
-        document.getElementById('barraNavegacion').style.display = 'none';
         clearInterval(intervaloReloj);
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('btnAnterior').style.visibility = 'hidden';
-      document.getElementById('avatarPreview').textContent = avatarElegido;
       document.getElementById('selectorIdioma').value = 'es';
       mostrarPantalla('inicio');
-      document.getElementById('barraNavegacion').style.display = 'block';
       actualizarListaComandos();
+      renderSOS();
     });
   </script>
 </body>
