@@ -3,57 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contigo | Acompañamiento emocional premium</title>
+  <title>Contigo | Acompañamiento emocional</title>
   <meta name="theme-color" content="#1f2a44" />
-  <meta name="description" content="Contigo, una experiencia premium de acompañamiento emocional, bienestar y calma." />
   <style>
     :root {
-      --bg: #f5f1ec;
-      --bg-2: #f8f7f4;
-      --panel: rgba(255,255,255,0.82);
-      --panel-strong: #ffffff;
-      --card: #fffdfb;
+      --bg: #f4f1ee;
+      --panel: rgba(255,255,255,0.86);
+      --panel-strong: #fff;
       --primary: #1f2a44;
-      --primary-soft: #eaf0ff;
-      --primary-strong: #101a2f;
+      --primary-soft: #edf3ff;
       --gold: #d7b26d;
       --gold-soft: #f6e8c9;
-      --rose: #e9d5ff;
-      --mint: #dff6ea;
-      --sky: #dfeeff;
-      --success: #2cb67d;
-      --danger: #ff5f6d;
+      --success: #27b778;
+      --danger: #ff5c5c;
       --text: #182130;
-      --muted: #5b6473;
-      --line: rgba(21, 31, 48, 0.09);
-      --shadow-soft: 0 18px 36px rgba(15, 23, 42, 0.08);
-      --shadow-card: 0 18px 40px rgba(20, 24, 35, 0.08);
+      --muted: #59657a;
+      --line: rgba(24,33,48,0.08);
+      --shadow: 0 20px 40px rgba(20,24,35,0.08);
       --radius-xl: 30px;
       --radius-lg: 22px;
-      --radius-md: 16px;
+      --radius-md: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(215,178,109,0.15), transparent 28%),
-        radial-gradient(circle at bottom right, rgba(31,42,68,0.06), transparent 24%),
-        linear-gradient(180deg, #f7f3ef 0%, #f4f5f9 100%);
+      background: linear-gradient(180deg, #f7f4f0 0%, #f4f5fb 100%);
       color: var(--text);
       min-height: 100vh;
       padding: 12px;
     }
 
     .app-shell { width: min(100%, 560px); margin: 0 auto; }
-
-    .pantalla { display: none; animation: fade 0.25s ease; }
+    .pantalla { display: none; animation: fade 0.22s ease; }
     .pantalla.activa { display: block; }
     .oculto { display: none !important; }
 
     @keyframes fade {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -62,19 +50,19 @@
       border: 1px solid rgba(255,255,255,0.5);
       border-radius: 36px;
       padding: 18px;
-      box-shadow: var(--shadow-soft);
-      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
     .hero {
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(160deg, rgba(31,42,68,1) 0%, rgba(48,63,92,0.96) 36%, rgba(103,118,157,0.97) 100%);
       border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-card);
-      padding: 30px 22px 24px;
+      box-shadow: 0 20px 40px rgba(20,24,35,0.14);
+      padding: 26px 22px 20px;
       color: white;
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.12);
+      position: relative;
+      overflow: hidden;
     }
 
     .hero::before {
@@ -84,42 +72,56 @@
       height: 220px;
       right: -40px;
       top: -50px;
-      background: radial-gradient(circle, rgba(215,178,109,0.4), rgba(215,178,109,0));
+      background: radial-gradient(circle, rgba(215,178,109,0.35), rgba(215,178,109,0));
       border-radius: 50%;
     }
 
-    .hero-mark {
-      position: relative;
-      z-index: 1;
-      font-size: 4.3rem;
-      line-height: 1;
-      margin-bottom: 14px;
-      text-shadow: 0 10px 30px rgba(0,0,0,0.14);
-    }
-
+    .hero-mark { position: relative; z-index: 1; font-size: 4rem; margin-bottom: 10px; }
     .hero h1 {
-      position: relative;
-      z-index: 1;
-      font-size: clamp(2.1rem, 6vw, 3rem);
+      position: relative; z-index: 1;
+      font-size: clamp(2.2rem, 6vw, 3rem);
       line-height: 1.05;
       letter-spacing: -0.06em;
       margin-bottom: 12px;
       font-weight: 800;
     }
-
     .hero p {
-      position: relative;
-      z-index: 1;
-      color: rgba(255,255,255,0.78);
+      position: relative; z-index: 1;
+      color: rgba(255,255,255,0.8);
       line-height: 1.65;
       font-size: 1rem;
       max-width: 360px;
     }
 
-    .hero-actions {
-      position: relative;
-      z-index: 1;
-      margin-top: 24px;
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      margin-top: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 1.05rem;
+    }
+
+    .badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--gold-soft), #fff3db);
+      font-size: 1.1rem;
+      box-shadow: inset 0 0 0 1px rgba(215,178,109,0.2);
     }
 
     .btn {
@@ -140,7 +142,7 @@
       box-shadow: 0 14px 18px rgba(201,157,92,0.35);
     }
     .btn.secondary {
-      color: var(--primary-strong);
+      color: var(--primary);
       background: #eef3ff;
       border: 1px solid rgba(31,42,68,0.08);
     }
@@ -172,38 +174,6 @@
       border-radius: 10px;
     }
 
-    .section {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-card);
-      padding: 18px 18px 16px;
-      margin-top: 16px;
-      backdrop-filter: blur(8px);
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      color: var(--primary);
-      font-weight: 800;
-      font-size: 1.05rem;
-    }
-    .badge {
-      width: 34px;
-      height: 34px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, var(--gold-soft), #fff3db);
-      box-shadow: inset 0 0 0 1px rgba(215,178,109,0.2);
-      font-size: 1.1rem;
-    }
-
-    .subtle { color: var(--muted); line-height: 1.6; }
-
     .quote-box {
       background: linear-gradient(135deg, #fffaf0, #f7f1e7);
       border: 1px solid rgba(215,178,109,0.25);
@@ -219,7 +189,7 @@
       border: 1px solid rgba(31,42,68,0.12);
       background: rgba(248,250,252,0.9);
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 11px 12px;
       color: var(--text);
       font-size: 1rem;
       outline: none;
@@ -234,6 +204,7 @@
     .row { display: flex; gap: 10px; flex-wrap: wrap; }
     .row > * { flex: 1; min-width: 120px; }
 
+    .subtle { color: var(--muted); line-height: 1.6; }
     .reloj {
       font-size: clamp(2.4rem, 6vw, 3rem);
       font-weight: 800;
@@ -252,38 +223,7 @@
       color: var(--muted);
       line-height: 1.5;
     }
-    .mini-item strong { color: var(--primary-strong); display: block; margin-bottom: 4px; }
-
-    .avatar-picker {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .avatar-option {
-      width: 54px;
-      height: 54px;
-      display: grid;
-      place-items: center;
-      border-radius: 16px;
-      background: rgba(248,250,252,0.7);
-      border: 1px solid transparent;
-      font-size: 2rem;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .avatar-option:hover, .avatar-option.selected {
-      background: rgba(234,240,255,0.9);
-      border-color: rgba(31,42,68,0.15);
-      transform: translateY(-1px);
-    }
-    .avatar-preview {
-      text-align: center;
-      font-size: 4.2rem;
-      margin: 8px 0 14px;
-      filter: drop-shadow(0 8px 14px rgba(31,42,68,0.08));
-    }
+    .mini-item strong { color: var(--primary); display: block; margin-bottom: 4px; }
 
     .status-box {
       display: flex;
@@ -310,22 +250,6 @@
     }
     .sos-row:last-child { border-bottom: none; padding-bottom: 0; }
 
-    .respira-circle {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      margin: 18px auto;
-      display: grid;
-      place-items: center;
-      font-size: 2.2rem;
-      background: linear-gradient(135deg, #dfeeff, #cfe3ff);
-      border: 6px solid rgba(31,42,68,0.06);
-      transition: transform 0.8s ease, background 0.8s ease;
-    }
-    .respira-circle.inhala { transform: scale(1.28); background: linear-gradient(135deg, #bfd6ff, #b7d7ff); }
-    .respira-circle.sostiene { transform: scale(1.42); background: linear-gradient(135deg, #d9d1ff, #c7d0ff); }
-    .respira-circle.exhala { transform: scale(1); background: linear-gradient(135deg, #dfeeff, #cfe3ff); }
-
     .nav {
       position: fixed;
       left: 50%;
@@ -337,7 +261,7 @@
       border-top: 1px solid rgba(31,42,68,0.08);
       box-shadow: 0 -12px 30px rgba(15,23,42,0.08);
       padding: 8px 12px 12px;
-      z-index: 9;
+      z-index: 10;
     }
     .nav-inner {
       display: grid;
@@ -362,7 +286,23 @@
       color: var(--primary);
       background: linear-gradient(135deg, rgba(234,240,255,0.9), rgba(246,232,201,0.8));
     }
-    .nav-spacer { height: 86px; }
+    .nav-spacer { height: 94px; }
+
+    .respira-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      margin: 18px auto;
+      display: grid;
+      place-items: center;
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #dfeeff, #cfe3ff);
+      border: 6px solid rgba(31,42,68,0.06);
+      transition: transform 0.8s ease, background 0.8s ease;
+    }
+    .respira-circle.inhala { transform: scale(1.28); background: linear-gradient(135deg, #bfd6ff, #b7d7ff); }
+    .respira-circle.sostiene { transform: scale(1.42); background: linear-gradient(135deg, #d9d1ff, #c7d0ff); }
+    .respira-circle.exhala { transform: scale(1); background: linear-gradient(135deg, #dfeeff, #cfe3ff); }
 
     @media (max-width: 420px) {
       body { padding: 10px; }
@@ -381,7 +321,7 @@
           <div class="hero-mark">💛</div>
           <h1>Contigo</h1>
           <p>Tu compañía emocional premium, cálida y consciente, siempre disponible cuando más la necesitas.</p>
-          <div class="hero-actions">
+          <div style="margin-top: 24px;">
             <button class="btn primary" onclick="comenzar()">Comenzar</button>
           </div>
         </div>
@@ -399,7 +339,7 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">✦</span> <span id="tituloPaso">Bienvenido</span></div>
-          <p class="subtle" id="textoPaso" style="min-height: 110px; font-size: 1.04rem;"></p>
+          <p class="subtle" id="textoPaso" style="min-height: 110px; font-size:1.04rem;"></p>
           <div class="row" style="margin-top: 16px;">
             <button class="btn ghost" id="btnAnterior" onclick="pasoAnterior()">Anterior</button>
             <button class="btn primary" id="btnSiguiente" onclick="pasoSiguiente()">Siguiente</button>
@@ -413,9 +353,9 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">🔐</span> Seguridad</div>
-          <p class="subtle" style="margin-bottom: 14px;">Protege tu información con un PIN de 4 dígitos.</p>
+          <p class="subtle" style="margin-bottom:14px;">Protege tu información con un PIN de 4 dígitos.</p>
           <input type="password" id="pin1" maxlength="4" inputmode="numeric" placeholder="____" />
-          <button class="btn primary" onclick="guardarPIN()" style="margin-top: 12px;">Guardar PIN</button>
+          <button class="btn primary" onclick="guardarPin()" style="margin-top: 12px;">Guardar PIN</button>
         </div>
       </div>
     </div>
@@ -426,7 +366,7 @@
           <div class="section-header"><span class="badge">🔑</span> Acceso</div>
           <p class="subtle" style="margin-bottom: 14px;">Ingresa tu PIN para continuar.</p>
           <input type="password" id="pinIngreso" maxlength="4" inputmode="numeric" placeholder="____" />
-          <button class="btn primary" onclick="verificarPIN()" style="margin-top: 12px;">Ingresar</button>
+          <button class="btn primary" onclick="verificarPin()" style="margin-top: 12px;">Ingresar</button>
         </div>
       </div>
     </div>
@@ -435,9 +375,9 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">✨</span> Mi compañera</div>
-          <p class="subtle" style="margin-bottom: 12px;">Elige la personalidad que te acompañará.</p>
-          <div id="avatarPreview" class="avatar-preview">😊</div>
-          <div class="avatar-picker">
+          <p class="subtle" style="margin-bottom:12px;">Elige la personalidad que te acompañará.</p>
+          <div id="avatarPreview" style="text-align:center; font-size:4.2rem; margin:8px 0 14px;">😊</div>
+          <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:10px;">
             <span class="avatar-option selected" onclick="elegirAvatar('😊')">😊</span>
             <span class="avatar-option" onclick="elegirAvatar('👵')">👵</span>
             <span class="avatar-option" onclick="elegirAvatar('👴')">👴</span>
@@ -461,7 +401,7 @@
           <div style="text-align:center; font-weight:700; color: var(--muted); margin-bottom: 12px;" id="saludo">Buenos días</div>
           <div class="quote-box">
             <div style="font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; opacity:0.7; margin-bottom:6px;">Mensaje del día</div>
-            <div id="mensajeDelDia">"Hoy es un buen día. Estoy aquí contigo."</div>
+            <div id="mensajeDelDia">“Hoy es un buen día. Estoy aquí contigo.”</div>
           </div>
           <button class="btn primary" onclick="leerTexto(document.getElementById('mensajeDelDia').textContent)" style="margin-top: 12px;">Escuchar mensaje</button>
         </div>
@@ -488,20 +428,20 @@
           <div class="mini-item">No tienes recordatorios activos.</div>
           <div class="row" style="margin-top: 12px;">
             <button class="btn ghost" onclick="alert('Función disponible en versión completa 💛')">Agregar</button>
-            <button class="btn secondary" onclick="irAPantalla('libro-recetas')">Recetas</button>
+            <button class="btn secondary" onclick="mostrarPantalla('libro-recetas')">Recetas</button>
           </div>
         </div>
 
         <div class="section">
           <div class="section-header"><span class="badge">📅</span> Citas</div>
           <div class="mini-item">No tienes citas programadas.</div>
-          <button class="btn ghost" onclick="irAPantalla('citas')" style="margin-top: 12px;">Agregar cita</button>
+          <button class="btn ghost" onclick="mostrarPantalla('citas')" style="margin-top: 12px;">Agregar cita</button>
         </div>
 
         <div class="section">
           <div class="section-header"><span class="badge">🧘</span> Calma</div>
           <p class="subtle" style="margin-bottom: 10px;">Tómate un momento para respirar y equilibrar tus emociones.</p>
-          <button class="btn warn" onclick="irAPantalla('respiracion')">Ejercicios de respiración</button>
+          <button class="btn warn" onclick="mostrarPantalla('respiracion')">Ejercicios de respiración</button>
         </div>
 
         <div class="section">
@@ -514,7 +454,7 @@
           </div>
         </div>
 
-        <button class="btn danger" onclick="irAPantalla('sos')" style="margin-top: 10px;">Necesito ayuda — SOS</button>
+        <button class="btn danger" onclick="mostrarPantalla('sos')" style="margin-top: 10px;">Necesito ayuda — SOS</button>
       </div>
     </div>
 
@@ -525,7 +465,7 @@
           <p id="mensajeUbicacion" class="subtle">Estoy buscando dónde estás...</p>
           <div id="lugaresCercanos" class="mini-item" style="margin-top: 12px;">Buscando lugares cercanos...</div>
           <button class="btn primary" onclick="guiarACasa()" style="margin-top: 12px;">Guiarme a casa</button>
-          <button class="btn ghost" onclick="irAPantalla('sos')" style="margin-top: 8px;">Llamar a alguien</button>
+          <button class="btn ghost" onclick="mostrarPantalla('sos')" style="margin-top: 8px;">Llamar a alguien</button>
         </div>
       </div>
     </div>
@@ -580,7 +520,7 @@
           <input type="date" id="fechaReceta" />
           <textarea id="notasReceta" rows="2" placeholder="Observaciones" style="margin-top: 10px;"></textarea>
           <button class="btn primary" onclick="alert('✅ Receta guardada con éxito 💛')" style="margin-top: 12px;">Guardar</button>
-          <button class="btn ghost" onclick="irAPantalla('principal')" style="margin-top: 8px;">Volver</button>
+          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
     </div>
@@ -602,7 +542,7 @@
             <option value="1s">1 semana antes</option>
           </select>
           <button class="btn primary" onclick="alert('✅ Cita guardada con éxito 💛')" style="margin-top: 12px;">Guardar cita</button>
-          <button class="btn ghost" onclick="irAPantalla('principal')" style="margin-top: 8px;">Volver</button>
+          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
     </div>
@@ -611,11 +551,11 @@
       <div class="premium-shell">
         <div class="section">
           <div class="section-header"><span class="badge">🧘</span> Respiración</div>
-          <p id="textoRespira" class="subtle" style="text-align:center; margin-top: 8px;">Respira conmigo...</p>
+          <p id="textoRespira" class="subtle" style="text-align:center; margin-top:8px;">Respira conmigo...</p>
           <div id="circuloRespira" class="respira-circle">🌬️</div>
-          <button class="btn primary" onclick="iniciarRespiración()">Comenzar</button>
-          <button class="btn ghost" onclick="detenerRespiración()" style="margin-top: 10px;">Detener</button>
-          <button class="btn ghost" onclick="irAPantalla('principal')" style="margin-top: 10px;">Volver</button>
+          <button class="btn primary" onclick="iniciarRespiracion()">Comenzar</button>
+          <button class="btn ghost" onclick="detenerRespiracion()" style="margin-top: 10px;">Detener</button>
+          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 10px;">Volver</button>
         </div>
       </div>
     </div>
@@ -630,7 +570,7 @@
           <input type="text" id="nombreCancion" placeholder="Nombre de la canción" style="margin-top: 12px;" />
           <input type="text" id="enlaceCancion" placeholder="Enlace (Spotify, YouTube, etc.)" style="margin-top: 8px;" />
           <button class="btn ghost" onclick="alert('✅ Canción agregada 💛')" style="margin-top: 12px;">Agregar a mi lista</button>
-          <button class="btn ghost" onclick="irAPantalla('principal')" style="margin-top: 8px;">Volver</button>
+          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
     </div>
@@ -646,7 +586,7 @@
           </div>
           <textarea id="contenidoCuento" rows="4" placeholder="Escribe o pega un cuento..." style="margin-top: 12px;"></textarea>
           <button class="btn primary" onclick="alert('✅ Cuento guardado 💛')" style="margin-top: 12px;">Guardar cuento</button>
-          <button class="btn ghost" onclick="irAPantalla('principal')" style="margin-top: 8px;">Volver</button>
+          <button class="btn ghost" onclick="mostrarPantalla('principal')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
     </div>
@@ -656,7 +596,7 @@
         <div class="section">
           <div class="section-header"><span class="badge">⚙️</span> Ajustes</div>
           <label class="subtle" style="display:block; margin-bottom:8px;">Idioma</label>
-          <select id="selectorIdioma2" onchange="cambiarIdioma(this.value)">
+          <select id="selectorIdioma" onchange="cambiarIdioma(this.value)">
             <option value="es">Español</option>
             <option value="en">English</option>
             <option value="pt">Português</option>
@@ -669,7 +609,7 @@
             <input type="range" id="velocidadVoz" min="0.5" max="2" step="0.1" value="1" />
           </div>
 
-          <button class="btn ghost" onclick="irAPantalla('comandos')" style="margin-top: 14px;">Mis comandos</button>
+          <button class="btn ghost" onclick="mostrarPantalla('comandos')" style="margin-top: 14px;">Mis comandos</button>
           <button class="btn ghost" onclick="enviarRespaldo()" style="margin-top: 8px;">Descargar respaldo</button>
 
           <div class="quote-box" style="margin-top: 14px; background: linear-gradient(135deg, rgba(223,246,234,0.9), rgba(240,253,244,0.95)); color: #0d6d4d; border-color: rgba(44,182,125,0.16);">
@@ -713,7 +653,7 @@
           <label class="subtle" id="etiquetaPersonalizado" style="display:none; margin-top:10px; margin-bottom:8px;">Respuesta</label>
           <input type="text" id="respuestaPersonalizada" placeholder="Ej: Descansa, estoy contigo" style="display:none;" />
           <button class="btn primary" onclick="guardarComandoPersonalizado()" style="margin-top: 12px;">Guardar comando</button>
-          <button class="btn ghost" onclick="irAPantalla('ajustes')" style="margin-top: 8px;">Volver</button>
+          <button class="btn ghost" onclick="mostrarPantalla('ajustes')" style="margin-top: 8px;">Volver</button>
         </div>
       </div>
     </div>
@@ -723,16 +663,14 @@
 
   <nav class="nav" id="barraNavegacion">
     <div class="nav-inner">
-      <button class="nav-btn active" onclick="irAPantalla('principal')" id="nav-principal">🏠<span>Inicio</span></button>
-      <button class="nav-btn" onclick="irAPantalla('musica')" id="nav-musica">🎧<span>Disfrutar</span></button>
-      <button class="nav-btn" onclick="irAPantalla('sos')" id="nav-sos">🆘<span>Ayuda</span></button>
-      <button class="nav-btn" onclick="irAPantalla('ajustes')" id="nav-ajustes">⚙️<span>Más</span></button>
+      <button class="nav-btn active" onclick="mostrarPantalla('principal')" id="nav-principal">🏠<span>Inicio</span></button>
+      <button class="nav-btn" onclick="mostrarPantalla('musica')" id="nav-musica">🎧<span>Disfrutar</span></button>
+      <button class="nav-btn" onclick="mostrarPantalla('sos')" id="nav-sos">🆘<span>Ayuda</span></button>
+      <button class="nav-btn" onclick="mostrarPantalla('ajustes')" id="nav-ajustes">⚙️<span>Más</span></button>
     </div>
   </nav>
 
   <script>
-    let idiomaActual = 'es';
-    let pasoActual = 0;
     const pasosTutorial = [
       { titulo: 'Bienvenido a Contigo', texto: 'Soy tu amiga Contigo. No importa la hora, siempre estoy aquí para ti.' },
       { titulo: 'Siempre aquí', texto: 'Te ayudo con tus medicamentos, citas médicas y cuidados de salud.' },
@@ -742,80 +680,84 @@
       { titulo: '¡Comencemos!', texto: 'Primero protege tu información con un PIN de 4 dígitos.' }
     ];
 
-    let PIN_GUARDADO = null;
+    let pasoActual = 0;
+    let pinGuardado = null;
     let avatarElegido = '😊';
     let comandosPersonalizados = [];
     let reconocimientoVoz = null;
-    let intervaloReloj, intervaloRespira;
+    let intervaloReloj = null;
+    let intervaloRespira = null;
+    let respiraEtapa = 0;
     let zonaSegura = null;
     let viajeActivo = false;
-    let respiraEtapa = 0;
     let telefonosSOS = [];
 
-    function irAPantalla(nombre) {
-      document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+    function mostrarPantalla(nombre) {
+      document.querySelectorAll('.pantalla').forEach((p) => p.classList.remove('activa'));
       const pantalla = document.getElementById('pantalla-' + nombre);
       if (pantalla) pantalla.classList.add('activa');
       actualizarNavegacion(nombre);
     }
 
     function actualizarNavegacion(actual) {
-      document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach((btn) => btn.classList.remove('active'));
       const btn = document.getElementById('nav-' + actual);
       if (btn) btn.classList.add('active');
     }
 
     function comenzar() {
-      const pinGuardado = localStorage.getItem('contigo_pin');
-      if (pinGuardado) {
-        PIN_GUARDADO = pinGuardado;
-        irAPantalla('verificar-pin');
+      const pinGuardadoLocal = localStorage.getItem('contigo_pin');
+      if (pinGuardadoLocal) {
+        pinGuardado = pinGuardadoLocal;
+        mostrarPantalla('verificar-pin');
         return;
       }
       pasoActual = 0;
-      mostrarPaso();
-      irAPantalla('tutorial');
+      mostrarPasoTutorial();
+      mostrarPantalla('tutorial');
     }
 
-    function mostrarPaso() {
-      document.getElementById('tituloPaso').textContent = pasosTutorial[pasoActual].titulo;
-      document.getElementById('textoPaso').textContent = pasosTutorial[pasoActual].texto;
+    function mostrarPasoTutorial() {
+      const paso = pasosTutorial[pasoActual];
+      document.getElementById('tituloPaso').textContent = paso.titulo;
+      document.getElementById('textoPaso').textContent = paso.texto;
       document.getElementById('indicadorPaso').textContent = `${pasoActual + 1} / ${pasosTutorial.length}`;
-      document.getElementById('btnAnterior').style.visibility = pasoActual === 0 ? 'hidden' : 'visible';
+      const anterior = document.getElementById('btnAnterior');
+      anterior.style.visibility = pasoActual === 0 ? 'hidden' : 'visible';
       document.getElementById('btnSiguiente').textContent = pasoActual === pasosTutorial.length - 1 ? 'Comenzar' : 'Siguiente';
     }
 
     function pasoAnterior() {
       if (pasoActual > 0) {
-        pasoActual--;
-        mostrarPaso();
+        pasoActual -= 1;
+        mostrarPasoTutorial();
       }
     }
 
     function pasoSiguiente() {
       if (pasoActual < pasosTutorial.length - 1) {
-        pasoActual++;
-        mostrarPaso();
+        pasoActual += 1;
+        mostrarPasoTutorial();
       } else {
-        irAPantalla('pin');
+        mostrarPantalla('pin');
       }
     }
 
-    function guardarPIN() {
+    function guardarPin() {
       const pin = document.getElementById('pin1').value;
-      if (pin.length !== 4 || isNaN(pin)) {
+      if (pin.length !== 4 || Number.isNaN(Number(pin))) {
         alert('⚠️ Escribe 4 números por favor 💛');
         return;
       }
-      PIN_GUARDADO = pin;
+      pinGuardado = pin;
       localStorage.setItem('contigo_pin', pin);
       alert('✅ PIN guardado correctamente 💛');
-      setTimeout(() => irAPantalla('avatar'), 400);
+      setTimeout(() => mostrarPantalla('avatar'), 400);
     }
 
-    function verificarPIN() {
+    function verificarPin() {
       const pinIngresado = document.getElementById('pinIngreso').value;
-      if (pinIngresado === PIN_GUARDADO) {
+      if (pinIngresado === pinGuardado) {
         alert('✅ Bienvenido de nuevo 💛');
         setTimeout(() => entrarApp(), 500);
       } else {
@@ -827,8 +769,8 @@
     function elegirAvatar(emoji) {
       avatarElegido = emoji;
       document.getElementById('avatarPreview').textContent = emoji;
-      document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('selected'));
-      const selected = [...document.querySelectorAll('.avatar-option')].find(el => el.textContent.trim() === emoji);
+      document.querySelectorAll('.avatar-option').forEach((el) => el.classList.remove('selected'));
+      const selected = [...document.querySelectorAll('.avatar-option')].find((el) => el.textContent.trim() === emoji);
       if (selected) selected.classList.add('selected');
     }
 
@@ -839,7 +781,7 @@
 
     function entrarApp() {
       cargarDatosGuardados();
-      irAPantalla('principal');
+      mostrarPantalla('principal');
       iniciarReloj();
       actualizarSaludo();
     }
@@ -847,7 +789,8 @@
     function iniciarReloj() {
       const update = () => {
         const ahora = new Date();
-        document.getElementById('reloj').textContent = ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const hora = ahora.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        document.getElementById('reloj').textContent = hora;
       };
       update();
       clearInterval(intervaloReloj);
@@ -867,7 +810,7 @@
       window.speechSynthesis.cancel();
       const mensaje = new SpeechSynthesisUtterance(texto);
       mensaje.lang = 'es-ES';
-      mensaje.rate = parseFloat(document.getElementById('velocidadVoz')?.value || 1);
+      mensaje.rate = parseFloat(document.getElementById('velocidadVoz')?.value || '1');
       window.speechSynthesis.speak(mensaje);
     }
 
@@ -899,25 +842,25 @@
         }
       }
 
-      if (texto.includes('hola')) {
+      if (texto.includes('hola') || texto.includes('buenos días') || texto.includes('buenas tardes') || texto.includes('buenas noches')) {
         leerTexto('¡Hola! Qué alegría escucharte. Soy Contigo, estoy aquí para acompañarte. 💛');
-      } else if (texto.includes('medicamento')) {
-        irAPantalla('principal');
-        leerTexto('Aquí tienes tus medicamentos. No olvides tomarlos a su hora. 💛');
+      } else if (texto.includes('medicamento') || texto.includes('medicinas')) {
+        mostrarPantalla('principal');
+        leerTexto('Aquí están tus medicamentos. No olvides tomarlos a su hora. 💛');
       } else if (texto.includes('ayuda') || texto.includes('socorro') || texto.includes('emergencia')) {
-        irAPantalla('sos');
-        leerTexto('Estoy aquí contigo. No estás solo. 💛');
+        mostrarPantalla('sos');
+        leerTexto('Estoy aquí. No estás solo. Llama a quien necesites. 💛');
       } else if (texto.includes('mensaje') || texto.includes('día')) {
         leerTexto(document.getElementById('mensajeDelDia').textContent);
       } else if (texto.includes('respirar') || texto.includes('calma')) {
-        irAPantalla('respiracion');
-        leerTexto('Respira conmigo. Todo va a estar bien. 💛');
-      } else if (texto.includes('música') || texto.includes('musica')) {
-        irAPantalla('musica');
-        leerTexto('Aquí está tu música favorita. 🎵');
+        mostrarPantalla('respiracion');
+        leerTexto('Respira conmigo. Todo está bien. 💛');
+      } else if (texto.includes('música') || texto.includes('musica') || texto.includes('canciones')) {
+        mostrarPantalla('musica');
+        leerTexto('Aquí está tu música. Disfrútala con calma. 🎵💛');
       } else if (texto.includes('cuento') || texto.includes('cuentos')) {
-        irAPantalla('cuentos');
-        leerTexto('Aquí tienes tus cuentos. 📚');
+        mostrarPantalla('cuentos');
+        leerTexto('Aquí tienes tus cuentos. 📚💛');
       } else if (texto.includes('casa') || texto.includes('volver')) {
         guiarACasa();
       } else {
@@ -974,10 +917,11 @@
         return;
       }
 
-      lista.innerHTML = comandosPersonalizados.map((c, i) => `
+      lista.innerHTML = comandosPersonalizados.map((cmd, i) => `
         <div class="mini-item">
-          <strong>"${c.frase}"</strong>
-          <div style="color: var(--muted);">${nombresAcciones[c.accion] || 'Acción'}</div>
+          <strong>"${cmd.frase}"</strong>
+          <div style="color: var(--muted);">${nombresAcciones[cmd.accion] || 'Acción'}</div>
+          ${cmd.accion === 'personalizado' ? `<div style="color: var(--muted); margin-top:6px;">Respuesta: "${cmd.respuesta}"</div>` : ''}
           <button class="btn ghost small" onclick="eliminarComando(${i})" style="margin-top:8px;">Eliminar</button>
         </div>
       `).join('');
@@ -992,19 +936,24 @@
     function ejecutarAccionPersonalizada(comando) {
       switch (comando.accion) {
         case 'medicamentos':
-          irAPantalla('principal');
+          mostrarPantalla('principal');
+          leerTexto('Aquí están tus medicamentos. 💛');
           break;
         case 'sos':
-          irAPantalla('sos');
+          mostrarPantalla('sos');
+          leerTexto('Estoy aquí contigo. 💛');
           break;
         case 'respiracion':
-          irAPantalla('respiracion');
+          mostrarPantalla('respiracion');
+          leerTexto('Respira conmigo. 💛');
           break;
         case 'musica':
-          irAPantalla('musica');
+          mostrarPantalla('musica');
+          leerTexto('Aquí está tu música. 🎵💛');
           break;
         case 'cuentos':
-          irAPantalla('cuentos');
+          mostrarPantalla('cuentos');
+          leerTexto('Aquí están tus cuentos. 📚💛');
           break;
         case 'casa':
           guiarACasa();
@@ -1016,47 +965,48 @@
           notificarFamilia();
           break;
         case 'personalizado':
-          leerTexto(comando.respuesta || 'Estoy aquí para ti. 💛');
+          leerTexto(comando.respuesta || 'Estoy aquí contigo. 💛');
           break;
       }
     }
 
     function obtenerUbicacion() {
       if (!navigator.geolocation) {
-        alert('⚠️ Tu navegador no soporta geolocalización.');
+        alert('⚠️ Tu navegador no soporta ubicación.');
         return;
       }
+      document.getElementById('mensajeUbicacion').textContent = '📍 Buscando tu ubicación...';
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           document.getElementById('mensajeUbicacion').innerHTML = `✅ Te encontré 💛<br>Latitud: ${pos.coords.latitude.toFixed(4)}<br>Longitud: ${pos.coords.longitude.toFixed(4)}`;
-          irAPantalla('perdido');
+          mostrarPantalla('perdido');
         },
-        (err) => {
+        () => {
           document.getElementById('mensajeUbicacion').textContent = '❌ No pude obtener tu ubicación. ¿Estás bien? 💛';
-          irAPantalla('perdido');
+          mostrarPantalla('perdido');
         }
       );
     }
 
     function definirZonaSegura() {
       if (!navigator.geolocation) {
-        alert('⚠️ No se puede acceder a la ubicación.');
+        alert('⚠️ No se puede acceder a la ubicación');
         return;
       }
       navigator.geolocation.getCurrentPosition((pos) => {
         zonaSegura = { lat: pos.coords.latitude, lng: pos.coords.longitude };
         localStorage.setItem('contigo_casa', JSON.stringify(zonaSegura));
-        alert('🏠 Tu zona segura quedó guardada 💛');
+        alert('🏠 ¡Casa guardada con éxito! 💛');
       });
     }
 
     function guiarACasa() {
-      if (!zonaSegura) {
-        const guardada = localStorage.getItem('contigo_casa');
-        if (guardada) zonaSegura = JSON.parse(guardada);
+      const guardada = localStorage.getItem('contigo_casa');
+      if (guardada) {
+        zonaSegura = JSON.parse(guardada);
       }
       if (!zonaSegura) {
-        alert('⚠️ Aún no has definido tu casa. Guarda tu zona segura primero. 💛');
+        alert('⚠️ Aún no has definido tu casa. Toca “Definir mi casa” primero 💛');
         return;
       }
       iniciarViajeConDestino('Tu casa');
@@ -1076,50 +1026,51 @@
       document.getElementById('destinoActual').textContent = destino;
       document.getElementById('tiempoLlegada').textContent = 'Calculando...';
       document.getElementById('instruccionCamino').textContent = 'Sigue caminando con calma. Estoy contigo 💛';
-      irAPantalla('viaje');
+      mostrarPantalla('viaje');
       leerTexto(`Vamos hacia ${destino}. Te acompaño en el camino. 💛`);
     }
 
     function verRutaSegura() {
-      alert('✅ Parece que vas por el camino correcto. Sigue con calma 💛');
-      leerTexto('Vas por el camino correcto. No te preocupes, estoy contigo. 💛');
+      leerTexto('Sigues en el camino correcto. No te preocupes. Estoy aquí contigo. 💛');
+      alert('✅ Vamos bien. Sigue con calma 💛');
     }
 
     function finalizarViaje() {
       viajeActivo = false;
-      alert('🎉 ¡Llegaste! Qué alegría 💛');
+      alert('🎉 ¡Has llegado! Qué alegría 💛');
+      leerTexto('¡Felicidades! Ya llegaste. Descansa bien. 💛');
       document.getElementById('destinoViaje').value = '';
-      irAPantalla('principal');
+      mostrarPantalla('principal');
     }
 
     function meHePerdido() {
       viajeActivo = false;
-      irAPantalla('perdido');
-      leerTexto('No te asustes. Estamos juntos. Vamos a encontrar el camino. 💛');
+      mostrarPantalla('perdido');
+      leerTexto('No te asustes. Estoy aquí contigo. Vamos a buscar el camino. 💛');
       obtenerUbicacion();
     }
 
-    function iniciarRespiración() {
+    function iniciarRespiracion() {
       respiraEtapa = 0;
       clearInterval(intervaloRespira);
       const circulo = document.getElementById('circuloRespira');
       const texto = document.getElementById('textoRespira');
       const pasos = [
-        { clase: 'inhala', texto: 'Inhala lentamente... 🌬️' },
-        { clase: 'sostiene', texto: 'Mantén el aire... ✨' },
-        { clase: 'exhala', texto: 'Suelta el aire... 💨' }
+        { clase: 'inhala', texto: 'Inhala despacio... 🌬️', duracion: 4000 },
+        { clase: 'sostiene', texto: 'Sostén el aire... ✨', duracion: 4000 },
+        { clase: 'exhala', texto: 'Suelta el aire... 💨', duracion: 6000 }
       ];
       const ciclo = () => {
-        const pasoActual = pasos[respiraEtapa];
-        circulo.className = 'respira-circle ' + pasoActual.clase;
-        texto.textContent = pasoActual.texto;
+        const paso = pasos[respiraEtapa];
+        circulo.className = 'respira-circle ' + paso.clase;
+        texto.textContent = paso.texto;
         respiraEtapa = (respiraEtapa + 1) % pasos.length;
       };
       ciclo();
       intervaloRespira = setInterval(ciclo, 4000);
     }
 
-    function detenerRespiración() {
+    function detenerRespiracion() {
       clearInterval(intervaloRespira);
       document.getElementById('circuloRespira').className = 'respira-circle';
       document.getElementById('textoRespira').textContent = 'Respira conmigo... 💛';
@@ -1130,83 +1081,84 @@
     }
 
     function notificarFamilia() {
-      alert('📞 He avisado a tus personas de confianza. Están contigo. 💛');
-      leerTexto('He avisado a tus personas de confianza. No estás solo. 💛');
+      alert('📞 He avisado a tus personas de confianza. Están contigo en este momento. 💛');
+      leerTexto('He avisado a tu familia. No estás solo. 💛');
     }
 
     function agregarTelefonoSOS() {
-      const nombre = prompt('Nombre del contacto:');
-      const tel = prompt('Número de teléfono:');
+      const nombre = prompt('Nombre de la persona:');
+      const tel = prompt('Teléfono:');
       if (nombre && tel) {
         telefonosSOS.push({ nombre, tel });
         localStorage.setItem('contigo_sos', JSON.stringify(telefonosSOS));
-        alert('✅ Contacto de confianza agregado 💛');
+        alert('✅ Contacto agregado 💛');
       }
     }
 
     function enviarRespaldo() {
+      const correo = prompt('Escribe tu correo para recibir el respaldo:');
+      if (!correo) {
+        alert('Escribe tu correo, por favor 💛');
+        return;
+      }
       const respaldo = {
+        fecha: new Date().toLocaleString(),
         avatar: avatarElegido,
-        zonaSegura,
         comandos: comandosPersonalizados,
-        contactos: telefonosSOS,
-        fecha: new Date().toLocaleString()
+        zonaSegura,
+        telefonosSOS
       };
-      const blob = new Blob([JSON.stringify(respaldo, null, 2)], { type: 'application/json' });
+      const contenido = JSON.stringify(respaldo, null, 2);
+      const blob = new Blob([contenido], { type: 'text/plain' });
+      const enlace = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `contigo-respaldo-${new Date().toISOString().slice(0, 10)}.json`;
+      a.href = enlace;
+      a.download = `respaldo-contigo-${new Date().toISOString().slice(0, 10)}.txt`;
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(a.href);
-      alert('✅ Respaldo descargado 💛');
+      document.body.removeChild(a);
+      URL.revokeObjectURL(enlace);
+      alert('✅ ¡Respaldo guardado! Guárdalo en un lugar seguro 💛');
     }
 
     function abrirDonacion() {
-      alert('💛 Gracias por tu apoyo. Alias: Grumo.Primo.Comico');
+      alert('💛 Gracias por tu generosidad!\n\nAlias: Grumo.Primo.Comico\n\nQue la vida te devuelva multiplicado todo lo que das. 💚✨');
     }
 
     function cambiarIdioma(codigo) {
-      idiomaActual = codigo;
       localStorage.setItem('contigo_idioma', codigo);
-      alert('✅ Idioma actualizado 💛');
+      alert('✅ Idioma cambiado con éxito 💛');
     }
 
     function cargarDatosGuardados() {
+      const guardadoAvatar = localStorage.getItem('contigo_avatar');
+      if (guardadoAvatar) avatarElegido = guardadoAvatar;
+      const guardadoIdioma = localStorage.getItem('contigo_idioma');
+      if (guardadoIdioma) document.getElementById('selectorIdioma').value = guardadoIdioma;
+      const guardadoCasa = localStorage.getItem('contigo_casa');
+      if (guardadoCasa) zonaSegura = JSON.parse(guardadoCasa);
+      const guardadoSOS = localStorage.getItem('contigo_sos');
+      if (guardadoSOS) telefonosSOS = JSON.parse(guardadoSOS);
       comandosPersonalizados = JSON.parse(localStorage.getItem('comandosPersonalizados') || '[]');
-      PIN_GUARDADO = localStorage.getItem('contigo_pin');
-      const avatarGuardado = localStorage.getItem('contigo_avatar');
-      const idiomaGuardado = localStorage.getItem('contigo_idioma');
-      const casaGuardada = localStorage.getItem('contigo_casa');
-      const sos = localStorage.getItem('contigo_sos');
-
-      if (avatarGuardado) avatarElegido = avatarGuardado;
-      if (idiomaGuardado) {
-        idiomaActual = idiomaGuardado;
-        const idiomaSelect = document.getElementById('selectorIdioma2');
-        if (idiomaSelect) idiomaSelect.value = idiomaActual;
-      }
-      if (casaGuardada) zonaSegura = JSON.parse(casaGuardada);
-      if (sos) telefonosSOS = JSON.parse(sos);
-
       actualizarListaComandos();
-      const preview = document.getElementById('avatarPreview');
-      if (preview) preview.textContent = avatarElegido;
+      document.getElementById('avatarPreview').textContent = avatarElegido;
     }
 
     function cerrarSesion() {
       if (confirm('¿Seguro que quieres cerrar sesión? 💛')) {
-        irAPantalla('inicio');
+        mostrarPantalla('inicio');
         document.getElementById('barraNavegacion').style.display = 'none';
         clearInterval(intervaloReloj);
       }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      cargarDatosGuardados();
-      const preview = document.getElementById('avatarPreview');
-      if (preview) preview.textContent = avatarElegido;
-      const pinGuardado = localStorage.getItem('contigo_pin');
-      if (pinGuardado) PIN_GUARDADO = pinGuardado;
+      document.getElementById('btnAnterior').style.visibility = 'hidden';
+      document.getElementById('avatarPreview').textContent = avatarElegido;
+      document.getElementById('selectorIdioma').value = 'es';
+      mostrarPantalla('inicio');
+      document.getElementById('barraNavegacion').style.display = 'block';
+      actualizarListaComandos();
     });
   </script>
 </body>
