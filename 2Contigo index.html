@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌟 Contigo — Siempre aquí 💛</title>
+    <meta name="theme-color" content="#1A237E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Roboto", sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #F5F5F5 0%, #E8EAF6 40%, #C5CAE9 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .pantalla {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            animation: aparecerSuave 0.6s ease-out;
+        }
+
+        .pantalla.activa {
+            display: flex;
+        }
+
+        @keyframes aparecerSuave {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ======================================
+        AVATAR LUMINOSO — INSPIRADO EN HAL
+        =======================================*/
+        .avatar-contenedor {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            width: 220px;
+            height: 220px;
+        }
+
+        .avatar-esfera {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #5C6BC0 0%, #1A237E 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 60px rgba(92, 107, 192, 0.6), 
+                        0 0 120px rgba(26, 35, 126, 0.4);
+            transition: all 0.5s ease;
+        }
+
+        .avatar-ojos {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 30px;
+        }
+
+        .avatar-ojo {
+            width: 20px;
+            height: 40px;
+            background: #E8EAF6;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(232, 234, 246, 0.8);
+            transition: all 0.3s ease;
+        }
+
+        /* Animaciones del avatar */
+        .avatar-contenedor.atento .avatar-esfera {
+            background: radial-gradient(circle, #7986CB 0%, #3949AB 100%);
+            box-shadow: 0 0 70px rgba(121, 134, 203, 0.7), 
+                        0 0 140px rgba(57, 73, 171, 0.5);
+        }
+
+        .avatar-contenedor.hablando .avatar-ojo {
+            animation: parpadearSuave 1.2s ease-in-out infinite;
+        }
+
+        .avatar-contenedor.hablando .avatar-esfera {
+            animation: latirLuz 3s ease-in-out infinite;
+        }
+
+        @keyframes parpadearSuave {
+            0%, 100% { height: 40px; width: 20px; }
+            50% { height: 5px; width: 20px; border-radius: 50px; }
+        }
+
+        @keyframes latirLuz {
+            0%, 100% { box-shadow: 0 0 70px rgba(121, 134, 203, 0.7), 
+                                   0 0 140px rgba(57, 73, 171, 0.5); }
+            50% { box-shadow: 0 0 90px rgba(121, 134, 203, 0.9), 
+                               0 0 180px rgba(57, 73, 171, 0.7); }
+        }
+
+        .nombre-avatar {
+            font-size: 26px;
+            color: #1A237E;
+            margin-top: 200px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(26, 35, 126, 0.1);
+        }
+
+        /* ======================================
+        ELEMENTOS GENERALES
+        =======================================*/
+        .burbuja-mensaje {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            padding: 20px 28px;
+            max-width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            margin-bottom: 30px;
+            position: relative;
+            border: 2px solid #C5CAE9;
+        }
+
+        .burbuja-mensaje::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 12px 12px 0;
+            border-style: solid;
+            border-color: rgba(255, 255, 255, 0.9) transparent transparent;
+        }
+
+        .burbuja-texto {
+            font-size: 22px;
+            color: #263238;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .boton-grande {
+            width: 90%;
+            max-width: 360px;
+            padding: 24px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 22px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px 0;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .boton-grande:active {
+            transform: scale(0.97);
+        }
+
+        .boton-primario {
+            background: linear-gradient(135deg, #5C6BC0 0%, #3949AB 100%);
+            color: white;
+        }
+
+        .boton-primario:hover {
+            box-shadow: 0 8px 24px rgba(92, 107, 192, 0.4);
+        }
+
+        .boton-secundario {
+            background: linear-gradient(135deg, #81D4FA 0%, #4FC3F7 100%);
+            color: #01579B;
+        }
+
+        .boton-secundario:hover {
+            box-shadow: 0 8px 24px rgba(129, 212, 250, 0.4);
+        }
+
+        .boton-sos {
+            background: linear-gradient(135deg, #EF5350 0%, #E53935 100%);
+            color: white;
+        }
+
+        .input-grande {
+            width: 90%;
+            max-width: 360px;
+            padding: 20px 24px;
+            font-size: 22px;
+            border: 3px solid #C5CAE9;
+            border-radius: 16px;
+            background: #F5F5F5;
+            text-align: center;
+            color: #263238;
+            margin-bottom: 20px;
+        }
+
+        .input-grande:focus {
+            outline: none;
+            border-color: #5C6BC0;
+            background: #FFFFFF;
+        }
+
+        /* ======================================
+        MODO BOTONES — FLOTANTES Y GRANDES
+        =======================================*/
+        .modo-botones-avatar {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 20px;
+            border-radius: 50px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar-mini-contenedor {
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+
+        .avatar-mini-esfera {
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, #5C6BC0 0%, #1A237E 100%);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px rgba(92, 107, 192, 0.5);
+        }
+
+        .avatar-mini-ojos {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            gap: 8px;
+        }
+
+        .avatar-mini-ojo {
+            width: 6px;
+            height: 12px;
+            background: #E8EAF6;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(232, 234, 246, 0.8);
+        }
+
+        .nombre-mini {
+            font-size: 18px;
+            color: #1A237E;
+            font-weight: 500;
+        }
+
+        .fila-botones {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .boton-flotante {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .boton-flotante:active {
+            transform: scale(0.92);
+        }
+
+        .boton-flotante span {
+            font-size: 40px;
+            margin-bottom: 6px;
+        }
+
+        /* ======================================
+        OTROS ELEMENTOS
+        =======================================*/
+        .oculto { display: none !important; }
+
+        .estado-escuchando {
+            color: #3949AB;
+            font-size: 20px;
+            margin-top: 20px;
+            animation: parpadearSuave 1.2s infinite;
+        }
+
+        .mensaje-inferior {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 12px 24px;
+            border-radius: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            font-size: 18px;
+            color: #263238;
+            z-index: 20;
+        }
+
+        .boton-volver {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #1A237E;
+            cursor: pointer;
+        }
+
+        .seccion-titulo {
+            font-size: 24px;
+            color: #1A237E;
+            margin: 20px 0;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .tarjeta {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 10px 0;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #C5CAE9;
+        }
+
+        .tarjeta-texto {
+            font-size: 20px;
+            color: #263238;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ======================================
+    PANTALLA 1 — BIENVENIDA: EL AVATAR YA ESTÁ AQUÍ
+    =======================================-->
+    <div id="pantalla-inicio" class="pantalla activa">
+        <div class="avatar-contenedor" id="avatarInicio">
+            <div class="avatar-esfera"></div>
+            <div class="avatar-ojos">
+                <div class="avatar-ojo"></div>
+                <div class="avatar-ojo"></div>
+            </div>
+        </div>
+        <div class="nombre-avatar">Contigo 💛</div>
+
+        <div class="burbuja-mensaje">
+            <p class="burbuja-texto" id="textoBienvenida">¡Hola! Soy Contigo. Estoy aquí para acompañarte, cuidarte y estar contigo siempre. 💛</p>
+        </div>
+
+        <button class="boton-grande boton-primario" onclick="irAPantalla('nombre')">
+            ✨ Empezar
+        </button>
+    </div>
+
+    <!-- ======================================
+    PANTALLA 2 — TU NOMBRE: QUIERO CONOCERTE
+    =======================================-->
+    <div id="pantalla-nombre" class="pantalla oculto">
+        <div class="avatar-contenedor" id="avatarNombre">
+            <div class="avatar-esfera"></div>
+            <div class="avatar-ojos">
+                <div class="avatar-ojo"></div>
+                <div class="avatar-ojo"></div>
+            </div>
+        </div>
+        <div class="nombre-avatar">Contigo 💛</div>
+
+        <div class="burbuja-mensaje">
+            <p class="burbuja-texto">¿Cómo te llamas? Quiero conocerte para llamarte por tu nombre. 💛</p>
+        </div>
+
+        <input type="text" id="nombreUsuario" class="input-grande" placeholder="Escribe tu nombre aquí...">
+
+        <button class="boton-grande boton-primario" onclick="guardarNombre()">
+            ✅ Continuar
+        </button>
+    </div>
+
+    <!-- ======================================
+    PANTALLA 3 — ELIGE TU MODO DE USO
+    =======================================-->
+    <div id="pantalla-modo" class="pantalla oculto">
+        <div class="avatar-contenedor" id="avatarModo">
+            <div class="avatar-esfera"></div>
+            <div class="avatar-ojos">
+                <div class="avatar-ojo"></div>
+                <div class="avatar-ojo"></div>
+            </div>
+        </div>
+        <div class="nombre-avatar" id="saludoModo">Un gusto conocerte 💛</div>
+
+        <div class="burbuja-mensaje">
+            <p class="burbuja-texto">¿Cómo prefieres que estemos juntos? Tú eliges.</p>
+        </div>
+
+        <button class="boton-grande boton-primario" onclick="iniciarModoVoz()">
+            🎤 Solo habla conmigo
+        </button>
+
+        <button class="boton-grande boton-secundario" onclick="iniciarModoBotones()">
+            🔘 Usar botones grandes
+        </button>
+    </div>
+
+    <!-- ======================================
+    PANTALLA 4 — MODO VOZ
+    =======================================-->
+    <div id="pantalla-modo-voz" class="pantalla oculto">
+        <div class="avatar-contenedor" id="avatarVoz" style="margin-top: 40px;">
+            <div class="avatar-esfera"></div>
+            <div class="avatar-ojos">
+                <div class="avatar-ojo"></div>
+                <div class="avatar-ojo"></div>
+            </div>
+        </div>
+        <div class="nombre-avatar">Te escucho 💛</div>
+
+        <div class="burbuja-mensaje" id="cajaMensajeVoz">
+            <p class="burbuja-texto" id="mensajeVoz">Solo presiona el botón y dime qué necesitas. Estoy aquí contigo.</p>
+        </div>
+
+        <button class="boton-grande boton-primario" id="botonMicrofono" onclick="escuchar()">
+            🎤 Escúchame
+        </button>
+
+        <p class="estado-escuchando oculto" id="estadoEscuchando">🔊 Te escucho... habla ahora</p>
+
+        <div style="margin-top: 30px;">
+            <button class="boton-grande boton-secundario" style="width: auto; padding: 16px 30px; font-size: 18px;" onclick="irAPantalla('modo')">
+                ⬅️ Cambiar de forma
+            </button>
+        </div>
+    </div>
+
+    <!-- ======================================
+    PANTALLA 5 — MODO BOTONES: MENÚ PRINCIPAL
+    =======================================-->
+    <div id="pantalla-modo-botones" class="pantalla oculto">
+        <div class="modo-botones-avatar">
+            <div class="avatar-mini-contenedor">
+                <div class="avatar-mini-esfera"></div>
+                <div class="avatar-mini-ojos">
+                    <div class="avatar-mini-ojo"></div>
+                    <div class="avatar-mini-ojo"></div>
+                </div>
+            </div>
+            <span class="nombre-mini" id="saludoMini">¡Hola! 💛</span>
+        </div>
+
+        <div style="margin-top: 100px; text-align: center; width: 100%;">
+            <div class="fila-botones">
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #5C6BC0, #3949AB);" onclick="irAPantalla('salud')">
+                    <span>🩺</span>
+                    Mi Salud
+                </button>
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #42A5F5, #1976D2);" onclick="irAPantalla('familia')">
+                    <span>👨‍👩‍👧‍👦</span>
+                    Mi Gente
+                </button>
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #66BB6A, #43A047);" onclick="irAPantalla('bienestar')">
+                    <span>🧠</span>
+                    Bienestar
+                </button>
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #FFA726, #FB8C00);" onclick="irAPantalla('viajes')">
+                    <span>🚶</span>
+                    Viajes
+                </button>
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #AB47BC, #8E24AA);" onclick="irAPantalla('cuidado')">
+                    <span>🔔</span>
+                    Cuidado
+                </button>
+                <button class="boton-flotante" style="background: linear-gradient(135deg, #EF5350, #C62828);" onclick="irAPantalla('emergencia')">
+                    <span>🆘</span>
+                    Ayuda
+                </button>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <button class="boton-grande boton-secundario" style="width: auto; padding: 16px 30px; font-size: 18px;" onclick="irAPantalla('modo')">
+                    ⬅️ Cambiar de forma
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ======================================
+    PANTALLA 6 — MI SALUD
+    =======================================-->
+    <div id="pantalla-salud" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <div class="avatar-contenedor" style="transform: scale(0.7); margin-bottom: 10px;">
+            <div class="avatar-esfera"></div>
+            <div class="avatar-ojos">
+                <div class="avatar-ojo"></div>
+                <div class="avatar-ojo"></div>
+            </div>
+        </div>
+        <h2 class="seccion-titulo">🩺 Mi Salud</h2>
+
+        <button class="boton-grande boton-primario" onclick="irAPantalla('medicamentos-libro')">
+            💊 Mis Medicamentos
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('turnos')">
+            📅 Turnos Médicos
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('signos-vitales')">
+            ⌚ Signos Vitales
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('sueno')">
+            😴 Control del Sueño
+        </button>
+    </div>
+
+    <!-- ======================================
+    LIBRO DE MEDICAMENTOS
+    =======================================-->
+    <div id="pantalla-medicamentos-libro" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('salud')">⬅️</button>
+        <h2 class="seccion-titulo">💊 Libro de Medicamentos</h2>
+        
+        <div class="tarjeta">
+            <p class="tarjeta-texto"><strong>Nombre:</strong> Vitamina D<br>
+            <strong>Recetado por:</strong> Dr. Pérez<br>
+            <strong>Para qué sirve:</strong> Fortalecer huesos y defensas<br>
+            <strong>Dosis:</strong> 1 comprimido cada mañana con desayuno</p>
+        </div>
+        
+        <button class="boton-grande boton-primario" onclick="alert('✅ Medicamento agregado. 💛')">
+            ➕ Agregar medicamento
+        </button>
+    </div>
+
+    <!-- ======================================
+    TURNOS MÉDICOS
+    =======================================-->
+    <div id="pantalla-turnos" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('salud')">⬅️</button>
+        <h2 class="seccion-titulo">📅 Mis Turnos</h2>
+        
+        <div class="tarjeta">
+            <p class="tarjeta-texto"><strong>Dr. Gómez — Cardiólogo</strong><br>
+            📅 15 de Octubre<br>
+            🕐 10:00 hs<br>
+            📍 Hospital Central</p>
+        </div>
+        
+        <button class="boton-grande boton-primario" onclick="alert('✅ Turno agregado y recordatorio activado. 💛')">
+            ➕ Agregar turno
+        </button>
+    </div>
+
+    <!-- ======================================
+    SIGNOS VITALES Y RELOJ INTELIGENTE
+    =======================================-->
+    <div id="pantalla-signos-vitales" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('salud')">⬅️</button>
+        <h2 class="seccion-titulo">⌚ Signos Vitales</h2>
+        
+        <div class="tarjeta">
+            <p class="tarjeta-texto">❤️ Frecuencia cardíaca: <strong id="valorCorazon">—</strong> lpm<br>
+            🫀 Presión arterial: <strong id="valorPresion">—</strong><br>
+            🌡️ Temperatura: <strong id="valorTemp">—</strong> °C</p>
+        </div>
+        
+        <button class="boton-grande boton-primario" onclick="conectarReloj()">
+            ⌚ Conectar reloj inteligente
+        </button>
+    </div>
+
+    <!-- ======================================
+    CONTROL DEL SUEÑO
+    =======================================-->
+    <div id="pantalla-sueno" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('salud')">⬅️</button>
+        <h2 class="seccion-titulo">😴 Control del Sueño</h2>
+        
+        <div class="tarjeta">
+            <p class="tarjeta-texto">🌙 Te duermes aproximadamente a las: <strong>22:00</strong><br>
+            ☀️ Te despiertas a las: <strong>07:00</strong><br>
+            ⏱️ Horas de descanso: <strong>9 horas</strong><br><br>
+            💡 <em>"Un buen descanso te da energía para todo el día. Siesta suave. 💛"</em></p>
+        </div>
+        
+        <button class="boton-grande boton-primario" onclick="alert('✅ Hora de dormir configurada. Te avisaré suavemente. 💛')">
+            ⏰ Configurar horario
+        </button>
+    </div>
+
+    <!-- ======================================
+    MI GENTE — FAMILIA Y CONEXIÓN
+    =======================================-->
+    <div id="pantalla-familia" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <h2 class="seccion-titulo">👨‍👩‍👧‍👦 Mi Gente</h2>
+        
+        <button class="boton-grande boton-primario" onclick="irAPantalla('videollamada')">
+            📹 Videollamada
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('album')">
+            🖼️ Álbum Familiar
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('mensajes-tablon')">
+            📋 Tablón de Mensajes
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('modo-cuidador')">
+            🤝 Modo Cuidador
+        </button>
+    </div>
+
+    <div id="pantalla-videollamada" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('familia')">⬅️</button>
+        <h2 class="seccion-titulo">📹 Videollamada</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Elige a quién ver y hablar. 💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('📞 Llamando a tu hija... Conectando en unos segundos. 💛')">
+            📞 Llamar a mi hija
+        </button>
+        <button class="boton-grande boton-primario" onclick="alert('📞 Llamando a mi hijo... Conectando. 💛')">
+            📞 Llamar a mi hijo
+        </button>
+    </div>
+
+    <div id="pantalla-album" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('familia')">⬅️</button>
+        <h2 class="seccion-titulo">🖼️ Álbum Familiar</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Tus personas queridas, siempre contigo. 💛</p></div>
+        <div class="fila-botones">
+            <button class="boton-flotante" style="background: linear-gradient(135deg, #FFCC80, #FFB74D); font-size: 16px; width: 140px; height: 140px;">
+                <span>👨‍👩‍👧‍👦</span>
+                Familia
+            </button>
+            <button class="boton-flotante" style="background: linear-gradient(135deg, #CE93D8, #BA68C8); font-size: 16px; width: 140px; height: 140px;">
+                <span>👶</span>
+                Nietos
+            </button>
+            <button class="boton-flotante" style="background: linear-gradient(135deg, #81C784, #66BB6A); font-size: 16px; width: 140px; height: 140px;">
+                <span>🎉</span>
+                Recuerdos
+            </button>
+        </div>
+    </div>
+
+    <div id="pantalla-mensajes-tablon" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('familia')">⬅️</button>
+        <h2 class="seccion-titulo">📋 Tablón de Mensajes</h2>
+        <div class="tarjeta">
+            <p class="tarjeta-texto">💬 <strong>De tu hija:</strong><br>
+            "¡Hola papá! Te quiero mucho. Te llamo más tarde. Cuídate."<br>
+            <em>— Hoy a las 10:30</em></p>
+        </div>
+        <button class="boton-grande boton-primario" onclick="alert('✅ Mensaje enviado. 💛')">
+            ✍️ Dejar un mensaje
+        </button>
+    </div>
+
+    <div id="pantalla-modo-cuidador" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('familia')">⬅️</button>
+        <h2 class="seccion-titulo">🤝 Modo Cuidador</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Las personas que cuidan de ti pueden ver cómo estás y ayudarte. 💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('✅ Código de acceso generado. Compártelo con quien te cuide. 💛')">
+            🔑 Generar acceso para cuidador
+        </button>
+    </div>
+
+    <!-- ======================================
+    BIENESTAR — JUEGOS, MÚSICA, CUENTOS, RESPIRACIÓN
+    =======================================-->
+    <div id="pantalla-bienestar" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <h2 class="seccion-titulo">🧠 Tu Bienestar</h2>
+        
+        <button class="boton-grande boton-primario" onclick="irAPantalla('juegos')">
+            🎮 Juegos Cognitivos
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('mensaje-dia')">
+            ☀️ Mensaje del Día
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('musica')">
+            🎵 Música
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('cuentos')">
+            📚 Cuentos
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('respiracion')">
+            🌬️ Respiración Guiada
+        </button>
+    </div>
+
+    <div id="pantalla-juegos" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('bienestar')">⬅️</button>
+        <h2 class="seccion-titulo">🎮 Juegos para la Mente</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Mantén tu mente ágil y activa. 💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('🧩 ¡Vamos! ¿Cuál es la palabra que falta? 🧠💛')">
+            🧩 Memoria
+        </button>
+        <button class="boton-grande boton-primario" onclick="alert('🔢 ¡Vamos con los números! 🧠💛')">
+            🔢 Ejercicios sencillos
+        </button>
+    </div>
+
+    <div id="pantalla-mensaje-dia" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('bienestar')">⬅️</button>
+        <h2 class="seccion-titulo">☀️ Mensaje del Día</h2>
+        <div class="burbuja-mensaje">
+            <p class="burbuja-texto"><em>"Cada día es una nueva oportunidad para sonreír. Eres importante y estás acompañado. Que tengas un día hermoso. 💛✨"</em></p>
+        </div>
+        <button class="boton-grande boton-primario" onclick="hablar('Cada día es una nueva oportunidad para sonreír. Eres importante y estás acompañado. Que tengas un día hermoso.')">
+            🔊 Escuchar
+        </button>
+    </div>
+
+    <div id="pantalla-musica" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('bienestar')">⬅️</button>
+        <h2 class="seccion-titulo">🎵 Tu Música</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Música que te hace bien. 🎵💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('🎵 Reproduciendo canciones tranquilas... 💛')">
+            🎧 Escuchar ahora
+        </button>
+    </div>
+
+    <div id="pantalla-cuentos" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('bienestar')">⬅️</button>
+        <h2 class="seccion-titulo">📚 Un Cuento</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Una historia tranquila para ti. 📖💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('📖 Había una vez una pequeña estrella que brillaba cada noche para guiar a quienes estaban solos... ✨💛')">
+            📖 Leer
+        </button>
+    </div>
+
+    <div id="pantalla-respiracion" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('bienestar')">⬅️</button>
+        <h2 class="seccion-titulo">🌬️ Respira conmigo</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">Inhala... sostén... exhala... tranquilo. 💛</p></div>
+        <button class="boton-grande boton-primario" onclick="alert('🌬️ Inhala despacio... 4 segundos... Sostén... Exhala suave... Repite conmigo. 💛')">
+            🌬️ Comenzar
+        </button>
+    </div>
+
+    <!-- ======================================
+    VIAJES Y ACOMPAÑAMIENTO
+    =======================================-->
+    <div id="pantalla-viajes" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <h2 class="seccion-titulo">🚶 Tus Viajes</h2>
+        
+        <button class="boton-grande boton-primario" onclick="alert('🏠 Vamos a casa juntos. Sigue mis indicaciones con calma. 💛')">
+            🏠 Llévame a casa
+        </button>
+        <button class="boton-grande boton-primario" onclick="alert('📍 Dime a dónde quieres ir. Te acompaño en el camino. 💛')">
+            📍 Ir a un lugar
+        </button>
+        <button class="boton-grande boton-primario" onclick="alert('🗺️ Sigues en el camino correcto. No te preocupes. Estoy aquí. 💛')">
+            🗺️ ¿Dónde estoy?
+        </button>
+    </div>
+
+    <!-- ======================================
+    CUIDADO — CLIMA, CAÍDAS, INACTIVIDAD
+    =======================================-->
+    <div id="pantalla-cuidado" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <h2 class="seccion-titulo">🔔 Tu Cuidado</h2>
+        
+        <button class="boton-grande boton-primario" onclick="irAPantalla('clima')">
+            🌤️ Alerta Climática
+        </button>
+        <button class="boton-grande boton-primario" onclick="irAPantalla('seguridad')">
+            🛡️ Seguridad Activa
+        </button>
+    </div>
+
+    <div id="pantalla-clima" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('cuidado')">⬅️</button>
+        <h2 class="seccion-titulo">🌤️ El Tiempo Hoy</h2>
+        <div class="tarjeta">
+            <p class="tarjeta-texto">☀️ Día soleado<br>
+            🌡️ Temperatura: 24°C<br>
+            💨 Viento suave<br><br>
+            💡 <em>"Hace un día hermoso, pero recuerda hidratarte bien y no salir al mediodía. Cuídate. 💛"</em></p>
+        </div>
+    </div>
+
+    <div id="pantalla-seguridad" class="pantalla oculto">
+        <button class="boton-volver" onclick="irAPantalla('cuidado')">⬅️</button>
+        <h2 class="seccion-titulo">🛡️ Seguridad Activa</h2>
+        
+        <div class="tarjeta">
+            <p class="tarjeta-texto">📐 <strong>Detección de caídas:</strong> Activada ✅<br>
+            ⏱️ <strong>Control de inactividad:</strong> Activado ✅<br><br>
+            💡 Si detecto algo inusual, te pregunto suavemente. Si no respondes, aviso a quienes te cuidan. No estás solo. 💛</p>
+        </div>
+        
+        <button class="boton-grande boton-primario" onclick="alert('✅ Seguridad activada. Estoy cuidando de ti. 💛')">
+            🔄 Activar todo
+        </button>
+    </div>
+
+    <!-- ======================================
+    EMERGENCIAS
+    =======================================-->
+    <div id="pantalla-emergencia" class="pantalla oculto">
+        <button class="boton-volver" onclick="volverAMenu()">⬅️</button>
+        <h2 class="seccion-titulo">🆘 Estoy aquí 💛</h2>
+        <div class="burbuja-mensaje"><p class="burbuja-texto">No estás solo. Llama a quien necesitas. 🫂</p></div>
+        
+        <button class="boton-grande boton-sos" onclick="window.location.href='tel:911'">
+            📞 LLAMAR A EMERGENCIAS
+        </button>
+        <button class="boton-grande boton-primario" style="margin-top: 15px;" onclick="alert('✅ He avisado a tus personas de confianza. Ellos saben que necesitas ayuda. 💛')">
+            ✉️ Avisar a mi familia
+        </button>
+    </div>
+
+<script>
+// ======================================
+// VARIABLES GLOBALES
+// ======================================
+let nombreUsuario = '';
+let modoActivo = null;
+let reconocimientoVoz = null;
+let monitoreoCaidas = null;
+let temporizadorInactividad = null;
+let ultimoMovimiento = Date.now();
+
+// ======================================
+// NAVEGACIÓN
+// ======================================
+function irAPantalla(nombre) {
+    document.querySelectorAll('.pantalla').forEach(p => p.classList.remove('activa'));
+    const pantalla = document.getElementById('pantalla-' + nombre);
+    if (pantalla) pantalla.classList.add('activa');
+}
+
+function volverAMenu() {
+    irAPantalla('modo-botones');
+}
+
+// ======================================
+// CONOCER AL USUARIO
+// ======================================
+function guardarNombre() {
+    const nombre = document.getElementById('nombreUsuario').value.trim();
+    if (!nombre) {
+        alert('Escribe tu nombre, por favor 💛');
+        return;
+    }
+    nombreUsuario = nombre;
+    localStorage.setItem('contigo_nombre', nombre);
+    irAPantalla('modo');
+    document.getElementById('saludoModo').textContent = `Un gusto conocerte, ${nombreUsuario}. 💛`;
+}
+
+// ======================================
+// ELEGIR MODO
+// ======================================
+function iniciarModoVoz() {
+    modoActivo = 'voz';
+    irAPantalla('modo-voz');
+    hablar(`¡Estamos listos, ${nombreUsuario}! Solo presiona el botón y dime qué necesitas. Estoy aquí contigo.`);
+    iniciarMonitoreoCaidas();
+    iniciarControlInactividad();
+}
+
+function iniciarModoBotones() {
+    modoActivo = 'botones';
+    irAPantalla('modo-botones');
+    document.getElementById('saludoMini').textContent = `¡Hola, ${nombreUsuario}! 💛`;
+    iniciarMonitoreoCaidas();
+    iniciarControlInactividad();
+}
+
+// ======================================
+// SÍNTESIS DE VOZ — Contigo habla
+// ======================================
+function hablar(texto) {
+    window.speechSynthesis.cancel();
+    const mensaje = new SpeechSynthesisUtterance(texto);
+    mensaje.lang = 'es-ES';
+    mensaje.rate = 0.9;
+    mensaje.pitch = 1.05;
+    
+    // Animar avatar mientras habla
+    document.querySelectorAll('.avatar-contenedor').forEach(a => a.classList.add('hablando'));
+    
+    mensaje.onend = () => {
+        document.querySelectorAll('.avatar-contenedor').forEach(a => a.classList.remove('hablando'));
+    };
+    
+    window.speechSynthesis.speak(mensaje);
+}
+
+// ======================================
+// RECONOCIMIENTO DE VOZ
+// ======================================
+function escuchar() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        alert('⚠️ Tu navegador no soporta reconocimiento de voz. Usa los botones grandes. 💛');
+        return;
+    }
+
+    const estado = document.getElementById('estadoEscuchando');
+    const boton = document.getElementById('botonMicrofono');
+    
+    estado.classList.remove('oculto');
+    if (boton) boton.disabled = true;
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    reconocimientoVoz = new SpeechRecognition();
+    reconocimientoVoz.lang = 'es-ES';
+    reconocimientoVoz.continuous = false;
+    reconocimientoVoz.interimResults = false;
+
+    reconocimientoVoz.onresult = function(event) {
+        estado.classList.add('oculto');
+        if (boton) boton.disabled = false;
+        
+        const dicho = event.results[0][0].transcript;
+        procesarLoDicho(dicho);
+    };
+
+    reconocimientoVoz.onerror = function() {
+        estado.classList.add('oculto');
+        if (boton) boton.disabled = false;
+        hablar('No te escuché bien. ¿Puedes decirme otra vez? Estoy aquí. 💛');
+    };
+
+    reconocimientoVoz.onend = function() {
+        estado.classList.add('oculto');
+        if (boton) boton.disabled = false;
+    };
+
+    reconocimientoVoz.start();
+}
+
+function procesarLoDicho(texto) {
+    const t = texto.toLowerCase();
+    const msg = document.getElementById('mensajeVoz');
+    if (msg) msg.textContent = `Escuché: "${texto}" ✨`;
+    
+    setTimeout(() => {
+        if (t.includes('hola') || t.includes('buen día') || t.includes('buenas')) {
+            hablar(`¡Hola, ${nombreUsuario}! Qué alegría escucharte. Estoy aquí contigo. 💛`);
+        } else if (t.includes('ayuda') || t.includes('socorro') || t.includes('emergencia')) {
+            hablar('No te preocupes. Estoy aquí. Llama a quien necesitas. No estás solo. 💛');
+            if (confirm('¿Quieres llamar a emergencias?')) {
+                window.location.href = 'tel:911';
+            }
+        } else if (t.includes('medicina') || t.includes('medicamento') || t.includes('salud')) {
+            hablar('Aquí están tus medicamentos. Recuerda tomarlos a su hora. Tu salud es importante. 💛');
+            irAPantalla('salud');
+        } else if (t.includes('casa') || t.includes('ir a casa') || t.includes('volver')) {
+            hablar('Vamos a casa juntos. No te preocupes. Te guío paso a paso. 💛');
+            irAPantalla('viajes');
+        } else if (t.includes('familia') || t.includes('llamar') || t.includes('videollamada')) {
+            hablar('Claro que sí. Aquí están tus personas queridas. 💛');
+            irAPantalla('familia');
+        } else if (t.includes('clima') || t.includes('tiempo') || t.includes('llueve')) {
+            hablar('Hoy hace un día hermoso. Recuerda hidratarte bien si sales. Cuídate. 💛');
+            irAPantalla('clima');
+        } else if (t.includes('gracias') || t.includes('eres buena')) {
+            hablar('Tú eres bueno. Estoy aquí porque me importas. Siempre juntas. 💛');
+        } else if (t.includes('adiós') || t.includes('hasta luego')) {
+            hablar('Que tengas un día tranquilo. Aquí estaré cuando vuelvas. Hasta pronto, amigo. 💛');
+        } else {
+            hablar(`Entiendo lo que dices. Lo más importante es que sé que estás ahí y estoy contigo. 💛`);
+        }
+    }, 800);
+}
+
+// ======================================
+// CONEXIÓN CON RELOJ INTELIGENTE
+// ======================================
+function conectarReloj() {
+    alert('⌚ Conectando con tu reloj inteligente... 💛');
+    setTimeout(() => {
+        document.getElementById('valorCorazon').textContent = '72';
+        document.getElementById('valorPresion').textContent = '120/80';
+        document.getElementById('valorTemp').textContent = '36.5';
+        alert('✅ ¡Reloj conectado! Tus datos se actualizarán aquí. 💛');
+    }, 1500);
+}
+
+// ======================================
+// DETECCIÓN DE CAÍDAS — Acelerómetro
+// ======================================
+function iniciarMonitoreoCaidas() {
+    if (!window.DeviceMotionEvent) return;
+    
+    let umbralCaida = 15;
+    let contadorConfirmacion = 0;
+    
+    window.addEventListener('devicemotion', function(event) {
+        const aceleracion = event.accelerationIncludingGravity;
+        if (!aceleracion) return;
+        
+        const total = Math.sqrt(
+            Math.pow(aceleracion.x || 0, 2) +
+            Math.pow(aceleracion.y || 0, 2) +
+            Math.pow(aceleracion.z || 0, 2)
+        );
+        
+        // Detectar posible caída
+        if (total < 2 && contadorConfirmacion === 0) {
+            contadorConfirmacion = 1;
+            setTimeout(() => {
+                const seguro = confirm('¿Estás bien? No te he visto moverte. Pulsa Aceptar si estás bien. 💛');
+                if (!seguro) {
+                    alert('⚠️ He avisado a tus personas de confianza. Vienen a ayudarte. No estás solo. 💛');
+                }
+                contadorConfirmacion = 0;
+            }, 10000); // 10 segundos para responder
+        }
+        
+        // Actualizar tiempo de actividad
+        if (total > umbralCaida) {
+            ultimoMovimiento = Date.now();
+        }
+    });
+}
+
+// ======================================
+// CONTROL DE INACTIVIDAD
+// ======================================
+function iniciarControlInactividad() {
+    const tiempoLimite = 30 * 60 * 1000; // 30 minutos
+    
+    setInterval(() => {
+        const tiempoTranscurrido = Date.now() - ultimoMovimiento;
+        if (tiempoTranscurrido > tiempoLimite) {
+            hablar('¿Estás bien? Han pasado 30 minutos sin saber de ti. Solo confirma que estás bien. 💛');
+            const ok = confirm('¿Estás bien? Pulsa Aceptar si estás bien. 💛');
+            if (ok) {
+                ultimoMovimiento = Date.now();
+                hablar('¡Qué bueno saber de ti! Aquí sigo contigo. 💛');
+            } else {
+                alert('⚠️ He avisado a tus personas de confianza. No estás solo. 💛');
+            }
+        }
+    }, 60000); // Revisar cada minuto
+}
+
+// ======================================
+// CARGA INICIAL
+// ======================================
+window.onload = function() {
+    const nombreGuardado = localStorage.getItem('contigo_nombre');
+    
+    if (nombreGuardado) {
+        nombreUsuario = nombreGuardado;
+        irAPantalla('modo');
+        document.getElementById('saludoModo').textContent = `¡Qué bueno verte otra vez, ${nombreUsuario}! 💛`;
+    } else {
+        setTimeout(() => {
+            hablar('¡Hola! Soy Contigo. Estoy aquí para acompañarte, cuidarte y estar contigo siempre.');
+        }, 600);
+    }
+};
+</script>
+</body>
+</html>
